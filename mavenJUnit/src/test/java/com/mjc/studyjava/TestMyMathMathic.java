@@ -82,17 +82,17 @@ public class TestMyMathMathic {
         int[] randomArray = mmm.makeRandomIntArray(5);
         assertThat(randomArray).isNotNull();
         assertThat(randomArray.length).isEqualTo(5);
-//        String sEnc1 = mmm.makeEncryptString("mjc813", 5);
-//        String sEnc2 = mmm.makeEncryptString("LeeSunSin", 5);
-//        assertThat(sEnc1.length()).isEqualTo(31);
-//        assertThat(sEnc2.length()).isEqualTo(46);
-//        assertThat(mmm.makeEncryptString(null, 5)).isEqualTo("");
-//        String sOrg1 = mmm.makeDecryptString(sEnc1, 5);
-//        String sOrg2 = mmm.makeDecryptString(sEnc2, 5);
-//        assertThat(sOrg1).isEqualTo("mjc813");
-//        assertThat(sOrg1.length()).isEqualTo(6);
-//        assertThat(sOrg2).isEqualTo("LeeSunSin");
-//        assertThat(sOrg2.length()).isEqualTo(9);
-//        assertThat(mmm.makeDecryptString(null, 5)).isEqualTo("");
+        String sEnc1 = mmm.makeEncryptString("mjc813", 5);
+        String sEnc2 = mmm.makeEncryptString("LeeSunSin", 5);
+        assertThat(sEnc1.length()).isEqualTo(31);
+        assertThat(sEnc2.length()).isEqualTo(46);
+        assertThat(mmm.makeEncryptString(null, 5)).isEqualTo("");
+        String sOrg1 = mmm.makeDecryptString(sEnc1, 5);
+        String sOrg2 = mmm.makeDecryptString(sEnc2, 5);
+        assertThat(sOrg1).isEqualTo("mjc813");
+        assertThat(sOrg1.length()).isEqualTo(6);
+        assertThat(sOrg2).isEqualTo("LeeSunSin");
+        assertThat(sOrg2.length()).isEqualTo(9);
+        assertThat(mmm.makeDecryptString(null, 5)).isEqualTo("");
     }
 }

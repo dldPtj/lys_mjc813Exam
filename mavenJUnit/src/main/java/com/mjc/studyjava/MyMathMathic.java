@@ -134,6 +134,7 @@ public class MyMathMathic {
     }
 
     public int absolute(int a) {
+        //Math.abs(a)
         if(a<0) {
             return a *= -1;
         } else return a;
@@ -151,13 +152,13 @@ public class MyMathMathic {
 
     public String toOct(int a) {
         String oct = Integer.toOctalString(a);
-        return oct;
+        return oct; // return Integer.toOctalString(a);
     }
 
     public int toDec(String a1) {
         if(a1 == null) return 0;
         int decimal = Integer.parseInt(a1);
-        return decimal;
+        return decimal; //return.Integer.getInteger(a1);
     }
 //    int avg(int [] array) : int 배열 array 의 평균값을 리턴한다.
 //    int sum(int [] array) : int 배열 array 의 총합계값을 리턴한다.
@@ -207,12 +208,14 @@ public class MyMathMathic {
         return a + sumOfFav(a+1, b);
     }
     public BigDecimal getBigDecimal(int n, int s) {
-        if(n==0&&s==0) return new BigDecimal("0.0");
+        if(n==0&&s==0)
+            return new BigDecimal("0.0");
         String number = n+"."+s;
         return new BigDecimal(number);
     }
     public Integer[] getIntegerArray(int[] array) {
-        if(array == null) return null;
+        if(array == null)
+            return null;
         Integer[] array1 = new Integer[array.length];
         for(int i=0; i< array.length; i++){
             array1[i] = array[i];
@@ -227,21 +230,68 @@ public class MyMathMathic {
         }
         return randomArray;
     }
-//    public String makeEncryptString(String text, int n) {
-//        int[] randomArray = new int[text.length()*n];
-//        Random rand = new Random();
-//        // makeEncryptString("mjc813", 5);
-//        // => A8dkI m 8Tkd j KLi9 c u4Rs 8 93sw 1 ksNm 3
-//        if(text == null) return "";
-//        for(int i=n; i<text.length()*n; i+=n){
-//
-//        } return randomArray.toString();
-//    }
-//    public String makeDecryptString(String code, int n) {
-//        String[] string = new String[code.length()/n];
-//        if(code == null) return "";
-//        for (int i=1; i<code.length()/n; i++){
-//            string[i] += code[i*n];
-//        } return string.toString();
-//    }
+    public String makeEncryptString(String text, int n) {
+        if ( text == null ) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        int nIndex = n;
+        sb.append(this.getRandomString(1));
+        for ( int i = 0; i < text.length(); i++ ) {
+            sb.append(this.getRandomString(n-1));
+            sb.append(text.charAt(i));
+        }
+        return sb.toString();
+    }
+    public String makeDecryptString(String code, int n) {
+        if ( code == null ) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for ( int i = 1; i < code.length(); i++ ) {
+            if ( i % n == 0 ) {
+                sb.append(code.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
+    private String getRandomString(int size) {
+        StringBuilder sb = new StringBuilder();
+        int n = 0;
+        while ( n < size ) {
+            int m = (int)(Math.random() * 3);
+            switch (m) {
+                case 0:
+                    sb.append(this.getRandomOneNumber());
+                    break;
+                case 1:
+                    sb.append(this.getRandomOneUpperAlpha());
+                    break;
+                case 2:
+                    sb.append(this.getRandomOneLowerAlpha());
+                    break;
+            }
+            n++;
+        }
+        return sb.toString();
+    }
+    public String getRandomOneNumber() {
+        char ch = '0';
+        ch += (char)(Math.random() * 10);
+        return Character.toString(ch);
+    }
+    public String getRandomOneUpperAlpha() {
+        char ch = 'A';
+        ch += (char)(Math.random() * 26);
+        return Character.toString(ch);
+    }
+    public String getRandomOneLowerAlpha() {
+        char ch = 'a';
+        ch += (char)(Math.random() * 26);
+        return Character.toString(ch);
+    }
+    private String getRandomCharacter(char ch, int untilN) {
+        ch += (char)(Math.random() * untilN);
+        return Character.toString(ch);
+    }
 }
