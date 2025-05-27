@@ -1,6 +1,6 @@
 package com.mjc813.studyjava;
 
-public class Main {
+public class ComputerMain {
     public static void main(String[] args) {
         Computer[] coms = new Computer[5];
         for(int i = 0; i < coms.length; i++) {

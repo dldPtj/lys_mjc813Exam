@@ -1,9 +1,14 @@
 package com.mjc813.studyjava.abstractj;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Driver {
-    String name;
-    int age;
-    Vehicle vehicle;
+    private String name;
+    private int age;
+    private Vehicle vehicle;
 
     public Driver(String name, int age, Vehicle vehicle) {
         this.name = name;
@@ -12,10 +17,19 @@ public class Driver {
     }
 
     public void drive(){
-        System.out.println("운전수"+this.name+"은"+this.vehicle.wheelCount+"개의 바퀴의 트럭"+Truck.class.getName()+"을 운전한다.");
+        if ( this.getVehicle() instanceof Truck || this.getVehicle() instanceof Bicycle ) {
+            System.out.printf("운전수 {%s}은/는", this.getName());
+            this.getVehicle().move();
+            System.out.println();
+        }
     }
 
-    void breakk(){
-        System.out.println("운전수"+this.name+"은 트럭/자전거"+Bicycle.class.getName()+"을 정지한다.");
+    public void breakk(){
+        if ( this.getVehicle() instanceof Truck || this.getVehicle() instanceof Bicycle ) {
+            System.out.printf("운전수 {%s}은/는", this.getName());
+            this.getVehicle().stop();
+            System.out.println();
+        }
+
     }
 }
