@@ -5,6 +5,7 @@ import static java.util.regex.Pattern.matches;
 public class MjcVaildCheck {
 
     public boolean isVaildPhoneNumber(String text) {
+        if(text == null) return false;
         if(text.matches("^01[0-9]-\\d{3,4}-\\d{4}$")){
             return true;
         } else {

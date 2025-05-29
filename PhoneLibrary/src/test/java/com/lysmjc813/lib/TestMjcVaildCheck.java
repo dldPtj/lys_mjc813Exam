@@ -1,4 +1,5 @@
-import com.lysmjc813.lib.MjcVaildCheck;
+package com.lysmjc813.lib;
+
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
