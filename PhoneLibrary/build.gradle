@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.lysmjc813.lib'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = rootProject.name
+            version = version
+
+            artifact "./build/libs/" + rootProject.name + "-" + version + ".jar"
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation group:'org.junit.jupiter', name:'junit-jupiter-api', version:'5.8.2'
+    testImplementation group:'org.assertj', name:'assertj-core', version:'3.22.0'
+}
+
+test {
+    useJUnitPlatform()
+}
