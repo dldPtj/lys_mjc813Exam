@@ -12,7 +12,7 @@ public class HashMapExample {
         Map<String, Integer> map = new HashMap<>();
 
         //객체 저장
-        map.put("신용권", 85);
+        map.put("신용권", 85); //키가 문자열이라면 오타 발생 시 유지보수 매우 어려움
         map.put("홍길동", 75);
         map.put("동장군", 80);
         map.put("홍길동", 75);

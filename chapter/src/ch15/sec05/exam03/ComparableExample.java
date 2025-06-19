@@ -8,7 +8,7 @@ public class ComparableExample {
         TreeSet<Person> treeSet = new TreeSet<Person>();
 
         //객체 저장
-        treeSet.add(new Person("홍길동", 45));
+        treeSet.add(new Person("홍길동", 1));
         treeSet.add(new Person("유미지", 25));
         treeSet.add(new Person("이호수", 31));
 
