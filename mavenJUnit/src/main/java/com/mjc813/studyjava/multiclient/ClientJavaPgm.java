@@ -1,4 +1,4 @@
-package com.mjc813.studyjava.readthread;
+package com.mjc813.studyjava.multiclient;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -10,8 +10,6 @@ public class ClientJavaPgm implements Runnable {
     private Socket socket;
     private BufferedReader br;
     private BufferedWriter bw;
-    // 배열로 많이 받을라고 하면 적을게 많음(index도 적고,,,)
-    // ClientSocketBuffer클래스를 만들고 @Getter, @Setter, extends Thread한다.
 
     public void connect( String ip, int port ) throws IOException {
         socket = new Socket();
@@ -25,6 +23,9 @@ public class ClientJavaPgm implements Runnable {
     }
 
     public void write(String str) throws IOException {
+        if(ServerJavaPgm.exitWord.equals(str)) {
+            str = ServerJavaPgm.exitCommand;
+        }
         this.bw.write(str);
         this.bw.newLine();
         this.bw.flush();
@@ -42,11 +43,12 @@ public class ClientJavaPgm implements Runnable {
     }
 
     public void read() throws IOException {
-        String s = this.br.readLine();
-        System.out.printf("From Server : %s\n", s);
-        if ("exit".equals(s)) {
+        String s = this.br.readLine();  // 통신소켓에서 데이터를 입력받기 대기 (블로킹 상태 발생)
+        if (ServerJavaPgm.exitCommand.equals(s)) {
+            System.out.printf("terminate chatting\n");
             System.exit(0);
         }
+        System.out.printf("From Server : %s\n", s);
     }
 
     public void close() throws IOException {
@@ -60,16 +62,16 @@ public class ClientJavaPgm implements Runnable {
         ClientJavaPgm cjp = new ClientJavaPgm();
         Scanner scan = new Scanner(System.in);
         try {
-            cjp.connect("172.111.114.116"/*옆사람의 ip주소*/, 59999);
+            cjp.connect("127.0.0.1"/*옆사람의 ip주소*/, 59999);
             Thread th = new Thread(cjp);
             th.start();
             cjp.write(String.format("Client[%s] %s"
                     , InetAddress.getLocalHost()
                     , "잘 접속했다."));
             while ( true ) {
-                String str = scan.nextLine();
+                String str = scan.nextLine();   // 키보드입력 (블로킹 상태 발생)
                 cjp.write(str);
-                if( "exit".equals(str) ) {
+                if( ServerJavaPgm.exitWord.equals(str) ) {
                     break;
                 }
             }

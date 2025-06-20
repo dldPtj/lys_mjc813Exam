@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 public class ServerJavaPgm extends Thread {
     private ServerSocket serverSocket;
-    private Socket cSck;
-    private BufferedWriter bw;
-    private BufferedReader br;
+    private Socket cSck; // 클라이언트와 통신할 소켓
+    private BufferedWriter bw; // 클라이언트에 데이터를 전송할 BufferStream
+    private BufferedReader br; // 클라이언트에 데이터를 받을 BufferStreamr
 
     public void init(int port) throws IOException {
         this.serverSocket = new ServerSocket();
