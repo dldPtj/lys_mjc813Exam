@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
+// Runnable
 public class ClientJavaPgm implements Runnable {
     private Socket socket;
     private BufferedReader br;
@@ -58,7 +59,7 @@ public class ClientJavaPgm implements Runnable {
     public static void main(String[] args) {
         System.out.println("ClientJavaPgm start");
         ClientJavaPgm cjp = new ClientJavaPgm();
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);          // 키보드 입력을 받음
         try {
             cjp.connect("172.111.114.116"/*옆사람의 ip주소*/, 59999);
             Thread th = new Thread(cjp);
@@ -67,7 +68,7 @@ public class ClientJavaPgm implements Runnable {
                     , InetAddress.getLocalHost()
                     , "잘 접속했다."));
             while ( true ) {
-                String str = scan.nextLine();
+                String str = scan.nextLine();       // 키보드 입력
                 cjp.write(str);
                 if( "exit".equals(str) ) {
                     break;
@@ -77,6 +78,11 @@ public class ClientJavaPgm implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            try {
+                cjp.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

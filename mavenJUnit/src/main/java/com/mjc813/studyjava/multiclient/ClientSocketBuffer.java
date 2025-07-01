@@ -16,7 +16,7 @@ import java.net.Socket;
 public class ClientSocketBuffer extends Thread {
     private Socket socket;
     private BufferedReader br;
-    private BufferedWriter bw;
+    private BufferedWriter bw;          // 이 세 개를 반복하기 위해 ClientSocketBuffer 클래스 제작함
     private IWrite iWrite;
 
     @Override

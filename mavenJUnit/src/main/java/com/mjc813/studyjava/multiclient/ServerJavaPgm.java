@@ -25,7 +25,7 @@ public class ServerJavaPgm extends Thread implements IWrite {
     }
 
     public void accept() throws IOException {
-        Socket socket = this.serverSocket.accept();
+        Socket socket = this.serverSocket.accept();         // 여러 클라이언트와 통신하려면 accept와 socket, bw, br이 클라이언트 개수만큼 늘어나야함
         System.out.printf("accept Client : %s\n", socket);
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(socket.getInputStream())

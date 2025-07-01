@@ -18,7 +18,7 @@ public class ServerJavaPgm extends Thread {
     }
 
     public void accept() throws IOException {
-        this.cSck = this.serverSocket.accept();
+        this.cSck = this.serverSocket.accept();             // 한 번만 함
         System.out.printf("accept Client : %s\n", this.cSck);
         this.br = new BufferedReader(
                 new InputStreamReader(this.cSck.getInputStream())

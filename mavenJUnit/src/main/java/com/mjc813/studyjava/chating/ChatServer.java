@@ -1,12 +1,11 @@
-package com.mjc813.studyjava.wakitoki;
+package com.mjc813.studyjava.chating;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-// 단방향 네트워크 (양쪽에서 주고받을 수 없음) = wakitoki
-public class ServerJavaPgm {
+public class ChatServer {
     private ServerSocket serverSocket;
     private BufferedWriter bw;
     private BufferedReader br;
@@ -26,13 +25,13 @@ public class ServerJavaPgm {
 
     public void read(Socket socket) throws IOException {
         String str = this.br.readLine();
-        System.out.printf("From Client : %s\n", str);
+        System.out.println();
     }
 
-    public void close(Socket sck) throws IOException {
-        this.bw.close();
+    public void close(Socket socket) throws IOException {
         this.br.close();
-        sck.close();
+        this.bw.close();
+        socket.close();
         this.serverSocket.close();
     }
 
@@ -43,20 +42,16 @@ public class ServerJavaPgm {
     }
 
     public static void main(String[] args) {
-        System.out.println("ServerJavaPgm start");
+        System.out.println("서버 실행");
 
-        ServerJavaPgm sjp = new ServerJavaPgm();
+        ChatServer server = new ChatServer();
         try {
-            Socket sck = sjp.accept(59999);
-            sjp.read(sck);
-            sjp.write(sck, "서버도 보내본다.");
-            sjp.read(sck);
-            sjp.write(sck, "서버에서 2차로 보내본다.");
-            sjp.read(sck);
-            sjp.write(sck, "서버에서 3차로 보내본다.");
-            sjp.close(sck);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            Socket socket = server.accept(50001);
+            server.read(socket);
+            server.write(socket, "서버 보내기");
+            server.close(socket);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
