@@ -13,11 +13,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ContactMysqlDAO {
-	
+
 	Connection conn = null;	/// RDBMS 접속하는 객체
 	PreparedStatement ps = null;	/// sql 쿼리를 실행하는 객체
 	ResultSet rs = null;	/// SELECT sql 쿼리를 실행하고 결과 값이 리턴되는 것을 읽어오는 객체
-	
+
 	/*
 	 * RDBMS 접속하기 위한 정적 메소드 이다. 인스턴스 할 필요 없이 ContactDtoDAO 클래스에서는 한개만 선언되는 정적 메소드
 	 */
@@ -31,11 +31,54 @@ public class ContactMysqlDAO {
 		/// 로그가 없으므로 콘솔에 출력했다
 		return con;
 	}
+	public String modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<ContactDto>list = new ArrayList<ContactDto>();
+		try {
+			conn = getConnection();
+			int id = Integer.parseInt(request.getParameter("id"));
+			/// 수정할 회원정보 가져오기
+			String sql = " SELECT ";
+			sql+= " id, ";
+			sql+= " name, ";
+			sql+= " phoneNumber, ";
+			sql+= " zipNumber, ";
+			sql+= " email ";
+			sql+= " FROM contact_tbl WHERE id ="+id;
+			System.out.printf("modify : sql=%s\n", sql);
+			/// 로그가 없으므로 콘솔에 출력했다
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				/// sql 쿼리가 리턴하는 행 이 있다면 값을 설정한다.
+				ContactDto ContactDto = new ContactDto();
+				ContactDto.setId(id);
+				ContactDto.setName(rs.getString(2));
+				ContactDto.setPhoneNumber(rs.getString(3));
+				ContactDto.setZipNumber(rs.getString(4));
+				ContactDto.setEmail(rs.getString(5));
+				/// 컬럼의 값을 가져온다. 이것은 배열이 아니므로 1 부터 6개 컬럼의 값을 ContactDto 객체에 가져온다.
+				list.add(ContactDto);
+				/// ContactDto 객체 한 개만 list 배열에 추가한다.
+			}
 
+			request.setAttribute("list",list);
+			/// modify.jsp 8 라인의 list = (ArrayList<ContactDto>)request.getAttribute("list"); 값으로 치환되어 list 배열에 저장
+			/// modify.jsp 10~16 라인의 list 배열 0 index 변수의 값을 화면에 출력하는데 사용됨
+
+			conn.close();
+			ps.close();
+			rs.close();
+			/// RDBMS 접속하고 사용 했었던 자원을 해제해야 한다. 이거 안하면 자원 누수로 나중에 프로그램 뻗었었음
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "modify.jsp";
+	}
 
 	/*
 	 * request : http 클라이언트 요청에 대한 정보가 해당 객체로 전달 된다.
-	 * response : http 클라이언트의 응답에 대한 정보가 반환 된다. 
+	 * response : http 클라이언트의 응답에 대한 정보가 반환 된다.
 	 */
 	public String selectAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<ContactDto>list = new ArrayList<ContactDto>();
@@ -58,7 +101,7 @@ public class ContactMysqlDAO {
 				/// 컬럼의 값을 가져온다. 이것은 배열이 아니므로 0 부터 사용하지 않고 1 부터 7개 컬럼의 값을 ContactDto 객체에 가져온다.
 				list.add(dto);
 				/// dto 객체를 list 배열에 추가한다.
-			}		
+			}
 			request.setAttribute("list",list);
 			/// list.jsp  list = (ArrayList<ContactDto>)request.getAttribute("list"); 값으로 치환되어 list 배열에 저장
 

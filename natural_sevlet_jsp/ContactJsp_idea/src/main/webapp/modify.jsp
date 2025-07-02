@@ -34,7 +34,7 @@ String email = list.get(0).getEmail();
 	<tr>
 		<th>ID (자동발생)</th>
 		<!-- 10번 라인의 custno 변수값을 출력 -->
-		<td><input name="id" value="<%=id %>" readonly value="1"></td>
+		<td><input name="id" value="<%=id%>" readonly value="1"></td>
 	</tr>
 	<tr>
 		<th>연락처성명 (최대 5자)</th>
