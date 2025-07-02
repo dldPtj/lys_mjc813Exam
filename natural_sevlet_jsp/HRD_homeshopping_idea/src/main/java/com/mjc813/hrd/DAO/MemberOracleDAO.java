@@ -25,7 +25,7 @@ public class MemberOracleDAO {
 	public static Connection getConnection() throws Exception{
 		Class.forName("oracle.jdbc.OracleDriver");
 		Connection con = DriverManager.getConnection
-				("jdbc:oracle:thin:@//localhost:1521/xe","system","1234");
+				("jdbc:oracle:thin:@//localhost:1521/xe","mjc813","mjc8131234!");
 		/// oracle 의 localhost 서버, 1521 포트, xe 리스너, 사용자계정 : system, 암호 : 1234 로 접속한다.
 		System.out.printf("getConnection : con=%s\n", con);
 		/// 로그가 없으므로 콘솔에 출력했다

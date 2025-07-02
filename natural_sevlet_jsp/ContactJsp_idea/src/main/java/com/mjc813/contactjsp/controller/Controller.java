@@ -1,9 +1,9 @@
-package com.mjc813.hrd.controller;
+package com.mjc813.contactjsp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.mjc813.hrd.DAO.*;
+import com.mjc813.contactjsp.DAO.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,43 +48,37 @@ public class Controller extends HttpServlet {
 
 		System.out.printf("doPro : url=%s\n", url);
 		/// 로그가 없으므로 콘솔에 출력했다
-		//MemberMysqlDAO member = new MemberMysqlDAO();
-		MemberOracleDAO member = new MemberOracleDAO();
+//		MemberMysqlDAO member = new MemberMysqlDAO();
+		ContactMysqlDAO dao = new ContactMysqlDAO();
 		switch(url) {
 		case "/home" :
 			site = "index.jsp";
 			break;
 		
-		case "/add" :
-			/// Controller 에서 DAO 메소드 호출시에 DTO 로 객체를 만들어서 매개변수로 전달해도 되지만 이 소스는 그런 작업을 하지 않았다.
-			/// 옛날 20년전 소스들은 request, response 를 계속 전달하여 사용하던 형태가 많았었다.
-			site = member.nextCustno(request, response);
-			break;
-		
 		case "/list" :			
-			site = member.selectAll(request, response);
+			site = dao.selectAll(request, response);
 			break;
-		
-		case "/result" :		
-			site = member.selectResult(request, response);
-			break;
+
+			case "/add" :
+				site = "add.jsp";
+				break;
 			
 		case "/insert" :		
-			site = member.insert(request, response);
+			site = dao.insert(request, response);
 			break;
 			
 		case "/modify" :		
-			site = member.modify(request, response);
+//			site = dao.modify(request, response);
 			break;
 			
 		case "/update" :
-			int result1 = member.update(request, response);
+			int result1 = dao.update(request, response);
 			response.setContentType("text/html; charset=UTF-8");
 			/// 클라이언트에 응답을 보낼때 html 문자열을 보내도록 설정한다.
 			PrintWriter out = response.getWriter();
 			if(result1 == 1) {
 				out.println("<script>");
-				out.println(" alert('회원수정이 완료 되었습니다!'); location.href='/list';");
+				out.println(" alert('연락처수정이 완료 되었습니다!'); location.href='/list';");
 				out.println("</script>");
 				out.flush();
 				/// 수정 인 경우에는 /list 주소로 이동 시켰다.
@@ -99,13 +93,13 @@ public class Controller extends HttpServlet {
 			//break;
 			
 		case "/delete" :
-			int result2 = member.delete(request, response);
+			int result2 = dao.delete(request, response);
 			response.setContentType("text/html; charset=UTF-8");
 			/// 클라이언트에 응답을 보낼때 html 문자열을 보내도록 설정한다.
 			out = response.getWriter();
 			if(result2 == 1) {
 				out.println("<script>");
-				out.println(" alert('회원삭제가 완료 되었습니다!'); location.href='/list';");
+				out.println(" alert('연락처삭제가 완료 되었습니다!'); location.href='/list';");
 				out.println("</script>");
 				out.flush();
 				/// 삭제 인 경우에는 /list 주소로 이동 시켰다.
