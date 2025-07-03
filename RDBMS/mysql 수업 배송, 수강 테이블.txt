@@ -1,0 +1,86 @@
+mysql 수업 배송, 수강 테이블
+======================
+create database
+
+CREATE DATABASE mjc813_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE USER 'lys'@'%' IDENTIFIED BY 'lys0723^^';
+GRANT ALL PRIVILEGES ON mjc813_db.* TO 'lys'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+=======================
+create table
+
+CREATE TABLE contact_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, name varchar(20) NOT NULL
+	, phoneNumber varchar(20) NOT NULL
+	, zipNumber varchar(5) NOT NULL
+	, email varchar(100) NOT NULL
+	, addr varchar(500) not null
+	, CONSTRAINT contact_tbl_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE saled_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, sale_dt DATE NOT NULL
+	, price INT UNSIGNED NOT NULL default 0
+	, qty INT UNSIGNED NOT NULL default 0
+	, product VARCHAR(100) NOT NULL
+	, location_id INT UNSIGNED
+	, discount INT UNSIGNED NOT NULL default 0
+	, contact_id int unsigned not null
+	, CONSTRAINT saled_tbl_pk PRIMARY KEY (id)
+	, CONSTRAINT saled_tbl_fk FOREIGN KEY (contact_id) REFERENCES contact_tbl (id)
+);
+
+CREATE TABLE location_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, location VARCHAR(500) NOT NULL
+	, CONSTRAINT location_tbl_pk PRIMARY KEY (id)
+	, CONSTRAINT location_tbl_fk FOREIGN KEY (id) REFERENCES saled_tbl (id)
+);
+=======================
+insert
+
+INSERT INTO contact_tbl (
+	name
+	, phoneNumber
+	, zipNumber
+	, email
+	, addr
+	)
+	VALUES (
+	'홍길동'
+	, '010-111'
+	, '21324'
+	, 'hong'
+	, '서울시 영등포구'),
+(
+	'이순신'
+	, '010-22'
+	, '34111'
+	, 'lee'
+	, '인천시 계양구'),
+(
+	'을지문덕'
+	, '010-33'
+	, '93828'
+	, 'ul'
+	, '서울시 구로구');
+
+SELECT id FROM contact_tbl WHERE name = '홍길동';
+
+SELECT * FROM contact_tbl;
+
+
+INSERT INTO saled_tbl (
+    sale_dt, price, qty, product, location_id, discount, contact_id
+)
+VALUES
+('2025-07-03', 2500, 2, '곰보빵', NULL, 0, 1),
+('2025-07-03', 3000, 1, '우유', NULL, 0, 1),
+('2025-07-02', 31000, 1, '쌀 10kg', 2, 1000, 2),
+('2025-07-02', 26000, 2, '밀가루 20kg', 2, 2000, 2),
+('2025-07-02', 85000, 1, '밥솥', 2, 0, 2),
+('2025-07-03', 12000, 2, '빗자루', NULL, 2000, 3);
+
+

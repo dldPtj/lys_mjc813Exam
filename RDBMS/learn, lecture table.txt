@@ -1,0 +1,253 @@
+CREATE TABLE contact_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, name varchar(20) NOT NULL
+	, phoneNumber varchar(20) NOT NULL
+	, zipNumber varchar(5) NOT NULL
+	, email varchar(100) NOT NULL
+	, addr varchar(500) not null
+	, CONSTRAINT contact_tb2_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE saled_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, sale_dt DATE NOT NULL default today
+	, price INT UNSIGNED NOT NULL default 0
+	, qty INT UNSIGNED NOT NULL default 0
+	, product VARCHAR(100) NOT NULL
+	, location VARCHAR(5) 
+	, discount INT UNSIGNED NOT NULL default 0
+	, contact_id int unsigned not null
+	, CONSTRAINT saled_tbl_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE location_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, location VARCHAR(500) NOT NULL
+	, CONSTRAINT location_tbl_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE learn_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, lecture_id INT UNSIGNED NOT NULL
+	, score DECIMAL(3,1) NOT NULL
+	, CONSTRAINT learn_tbl_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE lecture_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, subject VARCHAR(100) NOT NULL
+	, student VARCHAR(20) NOT NULL
+	, teacher VARCHAR(20) NOT NULL
+	, room_num VARCHAR(10) NOT NULL
+	, start_dt DATE NOT NULL
+	, end_dt DATE NOT NULL
+	, CONSTRAINT lecture_tbl_pk PRIMARY KEY (id)
+);
+
+INSERT INTO saled_tbl (
+	sale_dt
+	, price
+	, qty
+	, product
+	, location
+	, discount
+	, sale_user
+	, sale_addr
+	)
+	VALUES (
+	'2025-06-30'
+	, 50000
+	, 2
+	, '블루투스 스피커'
+ 	, '서울 강남구'
+ 	, 5000
+ 	, '홍길동'
+ 	, '서울 마포구'),
+	('2025-06-25'
+	, 120000
+	, 1
+	, '무선 헤드폰'
+ 	, '부산 해운대구'
+ 	, 10000
+ 	, '김철수'
+ 	, '부산 수영구'),
+ 	('2025-07-02'
+	, 30000
+	, 3
+	, '폰케이스'
+ 	, '인천 남동구'
+ 	, 3000
+ 	, '김영희'
+ 	, '인천 부평구');
+
+SELECT * FROM sale_tbl;
+
+CREATE TABLE course_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, course VARCHAR(100) 
+	, student VARCHAR(20)
+	, professor VARCHAR(20)
+	, room_num varchar(10)
+	, start_dt DATE 
+	, end_dt DATE 
+	, score decimal(3, 1)
+	, CONSTRAINT course_tb_pk PRIMARY KEY (id)
+	, CONSTRAINT course_tb_fk FOREIGN KEY (id) REFERENCES contact_tb2 (id)
+);
+
+INSERT INTO course_tb (
+	courseName
+	, professorName
+	, classroomNumber
+	, courseStartDate
+	, courseEndDate
+	, score
+	)
+	VALUES (
+	'Java 기초'
+	, '김철수'
+	, 101
+	, '2025-06-01'
+	, '2025-07-15'
+	, 85),
+	('UI/UX 디자인'
+	, '박지연'
+	, 202
+	, '2025-05-20'
+	, '2025-07-10'
+	, 92),
+	('데이터 분석'
+	, '이민호'
+	, 303
+	, '2025-06-10'
+	, '2025-08-01'
+	, 78);
+
+SELECT * FROM course_tb;
+
+
+
+
+
+
+CREATE TABLE learn_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, lecture_id INT UNSIGNED NOT NULL
+	, score DECIMAL(3,1) NOT NULL
+	, CONSTRAINT learn_tbl_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE lecture_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, subject VARCHAR(100) NOT NULL
+	, student VARCHAR(20) NOT NULL
+	, teacher VARCHAR(20) NOT NULL
+	, room_num VARCHAR(10) NOT NULL
+	, start_dt DATE NOT NULL
+	, end_dt DATE NOT NULL
+	, CONSTRAINT lecture_tbl_pk PRIMARY KEY (id)
+);
+
+INSERT INTO saled_tbl (
+	sale_dt
+	, price
+	, qty
+	, product
+	, location
+	, discount
+	, sale_user
+	, sale_addr
+	)
+	VALUES (
+	'2025-06-30'
+	, 50000
+	, 2
+	, '블루투스 스피커'
+ 	, '서울 강남구'
+ 	, 5000
+ 	, '홍길동'
+ 	, '서울 마포구'),
+	('2025-06-25'
+	, 120000
+	, 1
+	, '무선 헤드폰'
+ 	, '부산 해운대구'
+ 	, 10000
+ 	, '김철수'
+ 	, '부산 수영구'),
+ 	('2025-07-02'
+	, 30000
+	, 3
+	, '폰케이스'
+ 	, '인천 남동구'
+ 	, 3000
+ 	, '김영희'
+ 	, '인천 부평구');
+
+SELECT * FROM sale_tbl;
+
+CREATE TABLE course_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, course VARCHAR(100) 
+	, student VARCHAR(20)
+	, professor VARCHAR(20)
+	, room_num varchar(10)
+	, start_dt DATE 
+	, end_dt DATE 
+	, score decimal(3, 1)
+	, CONSTRAINT course_tb_pk PRIMARY KEY (id)
+	, CONSTRAINT course_tb_fk FOREIGN KEY (id) REFERENCES contact_tb2 (id)
+);
+
+INSERT INTO course_tb (
+	courseName
+	, professorName
+	, classroomNumber
+	, courseStartDate
+	, courseEndDate
+	, score
+	)
+	VALUES (
+	'Java 기초'
+	, '김철수'
+	, 101
+	, '2025-06-01'
+	, '2025-07-15'
+	, 85),
+	('UI/UX 디자인'
+	, '박지연'
+	, 202
+	, '2025-05-20'
+	, '2025-07-10'
+	, 92),
+	('데이터 분석'
+	, '이민호'
+	, 303
+	, '2025-06-10'
+	, '2025-08-01'
+	, 78);
+
+SELECT * FROM course_tb;
+======================================
+	SELECT
+		st.location
+		, ct.phoneNumber
+	FROM
+		saled_tbl AS st
+	INNER JOIN contact_tbl AS ct ON
+		st.contact_tbl = ct.id;
+------------------------------------------------------
+	SELECT
+		lt.location
+	FROM
+		location_tbl AS lt
+	INNER JOIN saled_tbl AS st ON
+		lt.saled_tbl = st.id;
+
+
+CREATE TABLE location_tbl (
+	id INT UNSIGNED auto_increment NOT NULL
+	, location VARCHAR(500) NOT NULL
+	, CONSTRAINT location_tbl_pk PRIMARY KEY (id)
+	, CONSTRAINT location_tbl_fk FOREIGN KEY (location_id) REFERENCES saled_tbl (id)
+);
