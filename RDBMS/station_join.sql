@@ -33,4 +33,4 @@ join station_tbl st1 on st1.id = twt.end_station_id
 -- inner join은 교집합
 -- left join와 right join은 값이 다 있는 값들만 출력하는게 아니라 null을 가지고 있는 행도 나옴
 -- right join을 마지막에 사용하면 그 전에 사용했던 join들은 다 묻히고 right join에서 오른쪽에 해당하는 행만 출력됨
--- join 뒤에 where절 작성
+-- join 뒤에 where절 작성 
