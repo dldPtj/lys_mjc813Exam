@@ -47,4 +47,15 @@ public class HelloController {
         model.addAttribute("num", num);
         return "gugudan";
     }
+
+    @GetMapping("/gugudan2/{i}")
+    public String gugudan(@PathVariable("i") String res) {
+        for (int i = 1; i < 10; i++) {
+            for (int j = 1; j < 10; j++) {
+                res += i+"단 "+i+"X"+j+"="+i*j+"<br/>"; // gugudan.mustache에서 java의 html태그가 사용되려면 중괄호 3개
+            }
+        }
+        System.out.println("gugudan2 ; " + res);
+        return "gugudan";
+    }
 }

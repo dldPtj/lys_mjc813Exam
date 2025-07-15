@@ -1,0 +1,6 @@
+# Spring Boot 설정값 저장
+spring:
+  application:
+  name: lys_springboot
+server:
+  port: 18080
