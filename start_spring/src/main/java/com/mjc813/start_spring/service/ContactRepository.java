@@ -28,5 +28,5 @@ public class ContactRepository {
         this.mapper.update(dto);
     }
 
-    //public void delete(Long id) { this.mapper.delete(id); }
+    public void delete(Long id) { this.mapper.delete(id); }
 }

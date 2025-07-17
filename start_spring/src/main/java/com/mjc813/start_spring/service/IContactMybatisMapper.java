@@ -11,5 +11,5 @@ public interface IContactMybatisMapper {
     public List<Contact> selectAll();
     public Contact selectOne(Long id);
     public void update(Contact dto);
-    //public void delete(Long id);
+    public void delete(Long id);
 }

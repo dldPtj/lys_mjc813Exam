@@ -80,14 +80,13 @@ public class ContactController {
         return "redirect:./contactlist"; // 정상 실행하면 redirect:/contact/contactlist
     }
 
-//    @GetMapping("/delete")
-//    public String delete(@RequestParam("id") Long id, Model model) {
-//        try {
-//            Contact result = this.contactRepository.delete(id);
-//            model.addAttribute("contact", result);
-//        } catch (Throwable e) {
-//            System.out.println(e.toString());
-//        }
-//        return "redirect:./contactlist";
-//    }
+    @PostMapping("/delete")
+    public String delete(@RequestParam("id") Long id, Model model) {
+        try {
+            this.contactRepository.delete(id);
+        } catch (Throwable e) {
+            System.out.println(e.toString());
+        }
+        return "redirect:./contactlist";
+    }
 }
