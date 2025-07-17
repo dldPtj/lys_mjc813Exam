@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: start_spring
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: contact_user
+    password: qwer1234!
+    url: jdbc:mysql://localhost:3306/mjc813_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+mybatis:
+#  error:
+#    path: /error
+#    whitelabel:
+#      enabled: false
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.mjc813.start_spring
