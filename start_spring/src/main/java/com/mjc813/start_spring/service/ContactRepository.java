@@ -19,4 +19,14 @@ public class ContactRepository {
     public List<Contact> selectAll() {
         return this.mapper.selectAll();
     }
+
+    public Contact selectOne(Long id) {
+        return this.mapper.selectOne(id);
+    }
+
+    public void update(Contact dto) {
+        this.mapper.update(dto);
+    }
+
+    //public void delete(Long id) { this.mapper.delete(id); }
 }

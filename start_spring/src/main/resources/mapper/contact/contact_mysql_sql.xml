@@ -4,19 +4,50 @@
 <mapper namespace="com.mjc813.start_spring.service.IContactMybatisMapper">
 
     <insert id="insert" parameterType="Contact" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO contact_tbl
-            (name, phone_number, zip_number, email)
-        VALUES
-            (#{name}, #{phoneNumber}, #{zipNumber}, #{email})
+        INSERT INTO contact_tbl (
+            name
+            , phoneNumber
+            , zipNumber
+            , email
+        ) VALUES (
+            #{name}
+            , #{phoneNumber}
+            , #{zipNumber}
+            , #{email}
+        )
     </insert>
 
     <select id="selectAll" resultType="Contact">
         SELECT id
             , name
-            , phone_number
-            , zip_number
+            , phoneNumber
+            , zipNumber
             , email
         FROM contact_tbl
         ORDER BY id
     </select>
+
+    <select id="selectOne" resultType="Contact" parameterType="Long">
+        SELECT id
+             , name
+             , phoneNumber
+             , zipNumber
+             , email
+        FROM contact_tbl
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="Contact">
+        UPDATE contact_tbl SET
+            name = #{name}
+            , phoneNumber = #{phoneNumber}
+            , zipNumber = #{zipNumber}
+            , email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM contact_tbl
+        WHERE id = #{id}
+    </delete>
 </mapper>
