@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>동물 정보 출력</h1>
+  {{#data}}
+    <label for="name">동물이름 : </label> <div type="text" id="name">{{name}}</div><br>
+    <label for="age">동물나이 : </label> <div type="number" id="age" name="age" value="" maxlength="3">{{age}}</div><br>
+    <label for="kind">동물종류 : </label> <div type="text" id="kind" name="kind" value="" maxlength="30">{{kind}}</div><br>
+  <button onclick="location.href='./modify?id={{id}}'">수정</button>
+  <button onclick="deleteAnimal({{{id}}});">삭제</button>
+  {{/data}}
+  {{^data}}
+    <div>데이터가 없습니다.</div>
+  {{/data}}
+</body>
+</html>

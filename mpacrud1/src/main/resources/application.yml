@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: mpacrud
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mpacrud_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: mpauser
+    password: qwer1234!
+  mustache:
+    suffix: .html
+    enabled: true
+    charset: UTF-8
+
+server:
+  port: 8088
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml #mapper 폴더 안에 mybatis 파일을 쓰겠다.
+  type-aliases-package: com.mjc813.mpacrud
+  configuration:
+    map-underscore-to-camel-case: true #mybatis에서 사용한 멤버변수들과 mysql에 있는 변수명을 상호호환하게 해줌
