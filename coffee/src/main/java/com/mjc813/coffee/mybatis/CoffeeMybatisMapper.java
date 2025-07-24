@@ -14,4 +14,5 @@ public interface CoffeeMybatisMapper {
     public void insertCoffee(CoffeeDto dto);
     public List<CoffeeDto> findAll();
     public CoffeeDto findById(Long id);
+    public void updateCoffee(CoffeeDto dto);
 }

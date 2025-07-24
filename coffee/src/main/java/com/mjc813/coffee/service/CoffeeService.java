@@ -24,4 +24,8 @@ public class CoffeeService {
         List<CoffeeDto> all = this.coffeeMybatisMapper.findAll();
         return all;
     }
+
+    public void update(CoffeeDto dto) {
+        this.coffeeMybatisMapper.updateCoffee(dto);
+    }
 }

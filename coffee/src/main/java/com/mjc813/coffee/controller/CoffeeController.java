@@ -26,10 +26,16 @@ public class CoffeeController {
         return "/coffee/view";
     }
 
+    @GetMapping("/coffee/addview")
+    public String addView() {
+        return "/coffee/addview";
+    }
+
     @PostMapping("/coffee/insert")
     public String coffee(@ModelAttribute CoffeeDto coffee) {
         try {
             this.coffeeService.insert(coffee);
+
         } catch (Throwable e) {
             System.err.println(e.toString());
         }
@@ -45,5 +51,15 @@ public class CoffeeController {
             System.err.println(e.toString());
         }
         return "/coffee/list";
+    }
+
+    @PostMapping("/coffee/update")
+    public String update(@ModelAttribute CoffeeDto coffee) {
+        try {
+            this.coffeeService.update(coffee);
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+        return "redirect:/";
     }
 }
