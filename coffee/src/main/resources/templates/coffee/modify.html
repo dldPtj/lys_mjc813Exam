@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee 메뉴 정보</title>
+</head>
+<body>
+    <h1>커피 정보 출력</h1>
+    {{#data}}
+    <form method="post" action="./update">
+        <label for="name">ID : </label><span>{{id}}</span><input type="hidden" id="id" name="id" value="{{id}}" readonly/> <br />
+        <label for="name">커피 이름 : </label><input type="text" id="name" name="name" value="{{name}}" maxlength="30" /> <br />
+        <label for="price">커피 가격 : </label><input type="number" id="price" name="price" value="{{price}}" /> <br />
+        <label for="source">원두 원산지 : </label><input type="text" id="source" name="source" value="{{source}}" maxlength="30" /> <br />
+        <label for="shots">커피 샷 수 : </label><input type="number" id="shots" name="shots" value="{{shots}}" /> <br />
+        <input type="submit" value="커피 수정" />
+    </form>
+    {{/data}}
+    {{^data}}
+    <div>데이터가 없습니다.</div>
+    {{/data}}
+</body>
+</html>

@@ -9,10 +9,13 @@ import java.util.List;
 // mapper인터페이스가 있어야 resources/mapper/**/*.xml 파일중에서
 // <mapper namespace="com.mjc813.mpacrud.animal.mybatis.AnimalMybatisMapper">
 // SQL 쿼리 문장의 태그들을 메소드로 만들어 준다.
+
+// xml과 id 동일하게 적기
 @Mapper
 public interface CoffeeMybatisMapper {
     public void insertCoffee(CoffeeDto dto);
     public List<CoffeeDto> findAll();
     public CoffeeDto findById(Long id);
     public void updateCoffee(CoffeeDto dto);
+    public void deleteCoffee(Long id);
 }

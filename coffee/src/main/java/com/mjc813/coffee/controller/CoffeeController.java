@@ -35,7 +35,7 @@ public class CoffeeController {
     public String coffee(@ModelAttribute CoffeeDto coffee) {
         try {
             this.coffeeService.insert(coffee);
-
+            // model.addAttribute 하면 재사용이 안 좋기 때문에 추천 X
         } catch (Throwable e) {
             System.err.println(e.toString());
         }
@@ -53,6 +53,18 @@ public class CoffeeController {
         return "/coffee/list";
     }
 
+    @GetMapping("/coffee/modify")
+    public String modify(Model model
+            , @RequestParam("id") Long id) {
+        try {
+            CoffeeDto byId = this.coffeeService.findById(id);
+            model.addAttribute("data", byId);
+        } catch (Throwable e) {
+            System.err.println(e.toString());
+        }
+        return "coffee/modify";
+    }
+
     @PostMapping("/coffee/update")
     public String update(@ModelAttribute CoffeeDto coffee) {
         try {
@@ -60,6 +72,6 @@ public class CoffeeController {
         } catch (Exception e) {
             System.err.println(e.toString());
         }
-        return "redirect:/";
+        return "redirect:./list";
     }
 }

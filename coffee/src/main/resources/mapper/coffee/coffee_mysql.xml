@@ -38,4 +38,13 @@
         FROM coffee_tbl
         WHERE id=#{id}
     </select>
+
+    <update id="updateCoffee" parameterType="CoffeeDto">
+        UPDATE coffee_tbl SET
+            name = #{name}
+            , price = #{price}
+            , source = #{source}
+            , shots = #{shots}
+        WHERE id = #{id}
+    </update>
 </mapper>

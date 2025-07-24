@@ -28,4 +28,8 @@ public class CoffeeService {
     public void update(CoffeeDto dto) {
         this.coffeeMybatisMapper.updateCoffee(dto);
     }
+
+    public void delete(Long id) {
+        this.coffeeMybatisMapper.deleteCoffee(id);
+    }
 }
