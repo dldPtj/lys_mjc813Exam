@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mjc813.coffee.mybatis.CoffeeMybatisMapper">
+    <!--<mapper namespace="Java소스 중에서 @Mapper 에노테이션이 있는 인터페이스 패키지 Full 경로-->
+    <insert id="insertCoffee" parameterType="CoffeeDto">
+        INSERT INTO coffee_tbl (
+            name
+            , price
+            , source
+            , shots
+        ) VALUES (
+            #{name}
+        , #{price}
+        , #{source}
+        , #{shots}
+        )
+    </insert>
+    <!--    mybatis에서 value 나타낼 때 #{키}-->
+    <select id="findAll" resultType="CoffeeDto">
+        SELECT
+            id
+            , name
+            , price
+            , source
+            , shots
+        FROM coffee_tbl
+        ORDER BY id
+    </select>
+
+    <select id="findById" resultType="CoffeeDto">
+        SELECT
+            id
+            , name
+            , price
+            , source
+            , shots
+        FROM coffee_tbl
+        WHERE id=#{id}
+    </select>
+</mapper>
