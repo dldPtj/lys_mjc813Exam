@@ -74,4 +74,14 @@ public class CoffeeController {
         }
         return "redirect:./list";
     }
+
+    @PostMapping("/coffee/delete")
+    public String delete(@RequestParam("id") Long id) {
+        try {
+            this.coffeeService.delete(id);
+        } catch (Throwable e) {
+            System.err.println(e.toString());
+        }
+        return "redirect:/coffee/list";
+    }
 }

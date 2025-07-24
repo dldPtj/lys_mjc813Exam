@@ -47,4 +47,9 @@
             , shots = #{shots}
         WHERE id = #{id}
     </update>
+
+    <delete id="deleteCoffee" parameterType="Long">
+        DELETE FROM coffee_tbl
+        WHERE id = #{id}
+    </delete>
 </mapper>
