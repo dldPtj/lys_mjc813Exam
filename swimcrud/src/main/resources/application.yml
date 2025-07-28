@@ -10,7 +10,9 @@ spring:
     suffix: .html
     enabled: true
     charset: UTF-8
-
+    prefix: classpath:/templates/
+    servlet:
+      cache: false
 server:
   port: 8089
   servlet:
