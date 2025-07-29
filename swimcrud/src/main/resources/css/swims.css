@@ -1,0 +1,13 @@
+h1 {
+    text-align: center;
+    margin: 50px;
+}
+h5 {
+    text-align: center;
+    margin: 20px;
+}
+span {
+    padding: 20px;
+    text-decoration-color: #007bff;
+    text-emphasis-color: #7abaff;
+}

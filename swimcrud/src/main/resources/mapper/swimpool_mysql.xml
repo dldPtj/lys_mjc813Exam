@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mjc813.swimcrud.swim.ISwimMybatis">
+<mapper namespace="com.mjc813.swimcrud.swimpool.service.SwimpoolMapper">
 
-    <select id="findAll" resultType="SwimDto">
+    <select id="findAll" resultType="SwimpoolDto">
         SELECT
             id
             , name
@@ -12,12 +12,13 @@
             , phone_number
             , addr
         FROM swimpool_tbl
-        ORDER BY id
+        ORDER BY id DESC
     </select>
 
-    <insert id="addSwim" parameterType="SwimDto">
+    <insert id="insert" parameterType="SwimpoolDto" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO swimpool_tbl (
-            name
+              id
+            , name
             , lanes
             , lane_type
             , phone_number
@@ -30,5 +31,15 @@
             , #{addr}
         )
     </insert>
+
+    <update id="update" parameterType="SwimpoolDto">
+        UPDATE swimpool_tbl SET
+        name = #{name}
+        , lanes = #{lanes}
+        , lane_type = #{lane_type}
+        , phone_number = #{phone_number}
+        , addr = #{addr}
+        WHERE id=#{id}
+    </update>
 
 </mapper>

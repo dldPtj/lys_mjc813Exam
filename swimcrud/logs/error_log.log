@@ -1,0 +1,4 @@
+ERROR 25-07-29 09:46:42[http-nio-8089-exec-1] [SwimpoolApiController:31] - org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.mjc813.swimcrud.swimpool.service.SwimpoolMapper.findAll
+ERROR 25-07-29 09:46:42[http-nio-8089-exec-5] [SwimpoolApiController:31] - org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.mjc813.swimcrud.swimpool.service.SwimpoolMapper.findAll
+ERROR 25-07-29 10:24:07[http-nio-8089-exec-10] [SwimpoolApiController:31] - org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.mjc813.swimcrud.swimpool.service.SwimpoolMapper.findAll
+ERROR 25-07-29 10:24:07[http-nio-8089-exec-8] [SwimpoolApiController:31] - org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.mjc813.swimcrud.swimpool.service.SwimpoolMapper.findAll

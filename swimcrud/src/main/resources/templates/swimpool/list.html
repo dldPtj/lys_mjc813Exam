@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>수영장 정보 목록</title>
+    <link href="/smbg/css/styles.css" rel="stylesheet" />
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // html파일이 로딩 완료되면 jquery 가 자동으로 실행한다.
+            $.loadData();   // jquery 함수 실행
+        });
+
+        $.loadData = () => {
+            $.list();   // jquery 함수 실행
+        }
+
+        $.list = function() {
+            $.ajax({
+                // javascript 의 Ajax 모태로 만든 jQuery Ajax 를 실행한다.
+                // ajax : 비동기 자바스크립트 http 통신 방법
+                url: '/swimpool/list'
+                , type: 'get'
+            }).done(function(result, textStatus, jqXHR) {
+                // ajax 비동기 요청 실행후에 서버에서 정상 응답이 왔을때 실행
+                console.log("Success:", result);
+                $.printList(result.responseData);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // ajax 비동기 요청 실행후에 에러 응답이 왔을때 실행
+                console.log("Error:", jqXHR, textStatus, errorThrown);
+                alert(`${jqXHR.responseJSON.responseEnum} : ${jqXHR.responseJSON.responseData.message}`);
+            });
+        }
+
+        $.printList = (list) => {
+            let strHtml = "";
+            for ( let i = 0; i < list.length; i++ ) {
+                strHtml += $.makeOneRow(list[i]);
+                // 배열의 객체만큼 loop 를 돌면서 html 출력 문자열을 만든다.
+            }
+            $("#listPrint").append(strHtml);
+            // listPrint ID 인 태그에 자식으로 뒷부분에 계속 추가한다.
+        }
+
+        $.makeOneRow = (item) => {
+            // 1개 객체의 정보를 div card 형태로 출력 html 문자열을 리턴 한다.
+            let str = `\
+            <div class="row gx-4 gx-lg-5">\
+                <div class="col-md-4 mb-5">\
+                    <div class="card h-100">\
+                        <div class="card-body">\
+                            <div>이름 : ${item.name}</div>\
+                            <div>전화 : ${item.phoneNumber}</div>\
+                            <div>형태 : ${item.laneType}</div>\
+                            <div>개수 : ${item.lanes}</div>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>`;
+
+            // str = "<div class=\"row gx-4 gx-lg-5\">";
+            // str += "<div class=\"col-md-4 mb-5\">";
+            // str += "<div class=\"card h-100\">";
+            // str += "<div class=\"card-body\">";
+            // str += "<div>이름 : " + item.name + "</div>";
+            // str += "<div>전화 : " + item.phoneNumber + "</div>";
+            // str += "<div>형태 : " + item.laneType + "</div>";
+            // str += "<div>개수 : " + item.lanes + "</div>";
+            // str += "</div></div></div></div>";
+            return str;
+        }
+    </script>
+</head>
+
+<body>
+<div id="listPrint" class="container px-4 px-lg-5">
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
+        <div class="card-body"><p class="text-white m-0">수영자 정보 목록</p></div>
+    </div>
+    <!-- Content Row-->
+<!--    <div class="row gx-4 gx-lg-5">-->
+<!--        <div class="col-md-4 mb-5">-->
+<!--            <div class="card h-100">-->
+<!--                <div class="card-body">-->
+<!--                <div>이름 : {name}</div>-->
+<!--                    <div>전화 : {phoneNumber}</div>-->
+<!--                    <div>형태 : {laneType}</div>-->
+<!--                    <div>개수 : {lanes}</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+</body>
+</html>
