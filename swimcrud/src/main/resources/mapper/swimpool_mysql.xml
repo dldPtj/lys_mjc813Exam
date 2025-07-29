@@ -12,34 +12,50 @@
             , phone_number
             , addr
         FROM swimpool_tbl
-        ORDER BY id DESC
+        ORDER BY id
+    </select>
+
+    <select id="findById" resultType="SwimpoolDto" parameterType="Integer">
+        SELECT
+            id
+             , name
+             , lanes
+             , lane_type
+             , phone_number
+             , addr
+        FROM swimpool_tbl
+        WHERE id = #{id}
     </select>
 
     <insert id="insert" parameterType="SwimpoolDto" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO swimpool_tbl (
-              id
-            , name
-            , lanes
-            , lane_type
-            , phone_number
-            , addr
+        INSERT INTO
+            swimpool_tbl (
+                name
+                , lanes
+                , lane_type
+                , phone_number
+                , addr
         ) VALUES (
-            #{name}
-            , #{lanes}
-            , #{lane_type}
-            , #{phone_number}
-            , #{addr}
-        )
+                 #{name}
+               , #{lanes}
+               , #{laneType}
+               , #{phoneNumber}
+               , #{addr}
+               )
     </insert>
 
     <update id="update" parameterType="SwimpoolDto">
         UPDATE swimpool_tbl SET
-        name = #{name}
-        , lanes = #{lanes}
-        , lane_type = #{lane_type}
-        , phone_number = #{phone_number}
-        , addr = #{addr}
-        WHERE id=#{id}
+            name = #{name}
+            , lanes = #{lanes}
+            , lane_type = #{laneType}
+            , phone_number =#{phoneNumber}
+            , addr = #{addr}
+        WHERE id = #{id}
     </update>
 
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM swimpool_tbl
+        WHERE id = #{id}
+    </delete>
 </mapper>

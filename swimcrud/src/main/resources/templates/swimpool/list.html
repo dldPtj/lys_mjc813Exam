@@ -5,11 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>수영장 정보 목록</title>
     <link href="/smbg/css/styles.css" rel="stylesheet" />
+    <style>
+        .wrap {
+            /* 전체 화면의 스타일 */
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            /* 화면 안의 내용이 있는 곳의 스타일 */
+            width: 80%;
+            height: 150px;
+            margin: 20px auto;
+        }
+
+        .modal_popup {
+            /* 모달 화면 안의 스타일, z-index: 값이 가장 크므로 화면의 상위에 표현된다.*/
+            width: 70%;
+            height: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: azure;
+            display: flex;
+            flex-flow: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /*z-index: 999;*/
+        }
+
+        .modal_background {
+            /* 모달 화면이 나타나면 화면 안의 내용 div id="content" 를 어둡게 만든다.
+                z-index 값을 content 보다 크므로 마우스 클릭시 modal_bg 에 클릭이 된다.
+             */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /*z-index: 99;*/
+        }
+    </style>
     <script src="/js/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function(){
             // html파일이 로딩 완료되면 jquery 가 자동으로 실행한다.
             $.loadData();   // jquery 함수 실행
+
+            $('#showAddModalButton').click(function () {
+                // jQuery 의 객체가 클릭되면 실행할 함수를 등록 (이벤트/핸들러 방식)
+                // id="modal_box_add" 요소를 1000ms 동안 서서히 보여준다.
+                $('.modal_popup').fadeIn(1000);
+                $('.modal_background').fadeIn(1000);
+            });
+
+            $('.modalCloseButton').click(function () {
+                // jQuery 의 객체가 클릭되면 실행할 함수를 등록 (이벤트/핸들러 방식)
+                // id="modal_box_add" 요소와 class="modal_bg" 요소를 서서히 감춘다.
+                $('.modal_popup').fadeOut();
+                $('.modal_background').fadeOut();
+            });
         });
 
         $.loadData = () => {
@@ -59,38 +118,136 @@
                 </div>\
             </div>`;
 
-            // str = "<div class=\"row gx-4 gx-lg-5\">";
-            // str += "<div class=\"col-md-4 mb-5\">";
-            // str += "<div class=\"card h-100\">";
-            // str += "<div class=\"card-body\">";
-            // str += "<div>이름 : " + item.name + "</div>";
-            // str += "<div>전화 : " + item.phoneNumber + "</div>";
-            // str += "<div>형태 : " + item.laneType + "</div>";
-            // str += "<div>개수 : " + item.lanes + "</div>";
-            // str += "</div></div></div></div>";
+            str = "<div class=\"row gx-4 gx-lg-5\">";
+            str += "<div class=\"col-md-4 mb-5\">";
+            str += "<div class=\"card h-100\">";
+            str += "<div class=\"card-body\">";
+            str += "<div>이름 : " + item.name + "</div>";
+            str += "<div>전화 : " + item.phoneNumber + "</div>";
+            str += "<div>형태 : " + item.laneType + "</div>";
+            str += "<div>개수 : " + item.lanes + "</div>";
+            str += "</div></div></div></div>";
             return str;
+        }
+
+        $.showInsertPopup = () => {
+            $('.modal_popup').fadeIn(1000);
+            $('.modal_background').fadeIn(1000);
+        }
+
+        $.insert = function() {
+            let inputData = {
+                "name" : $("#inName").val()
+                , "lanes": $("#inLanes").val()
+                , "laneType": $("#inLaneType").val()
+                , "phoneNumber": $("#inPhoneNumber").val()
+                , "addr": $("#inAddr").val()
+            }
+            $.ajax({
+                url: '/swimpool'
+                , type : 'post'
+                , data : JSON.stringify(inputData)
+                , datatype: 'JSON'
+                , contentType: 'application/json'
+            }).done(function(result, textStatus, jqXHR) {
+                // ajax 비동기 요청 실행후에 서버에서 정상 응답이 왔을때 실행
+                console.log("Success:", result);
+                $.printList(result.data);
+                $.closeInputPopup();
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // ajax 비동기 요청 실행후에 에러 응답이 왔을때 실행
+                console.log("Error:", jqXHR, textStatus, errorThrown);
+                let msg = "";
+                for( let i = 0; i < jqXHR.responseJSON.errors.length; i++ ) {
+                    msg += `${jqXHR.responseJSON.errors[i].codes[1]} : ${jqXHR.responseJSON.errors[i].defaultMessage}\n`;
+                }
+                alert(msg);
+            });
+        }
+
+        $.closeInputPopup = () => {
+            $.clearInputPopup();
+            $('.modal_popup').fadeOut(1000);
+            $('.modal_background').fadeOut(1000);
+            $.list();
+        }
+        $.clearInputPopup = function() {
+            $("#inName").val("");
+            $("#inPhoneNumber").val("");
+            $("#inAddr").val("");
+            $("#inLaneType").val("25");
+            $("#inLanes").val("");
+        }
+
+        $.update = function() {
+            $.ajax({
+
+            }).done(function(result, textStatus, jqXHR) {
+                // ajax 비동기 요청 실행후에 서버에서 정상 응답이 왔을때 실행
+                console.log("Success:", result);
+                $.printList(result.responseData);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // ajax 비동기 요청 실행후에 에러 응답이 왔을때 실행
+                console.log("Error:", jqXHR, textStatus, errorThrown);
+                alert(`${jqXHR.responseJSON.responseEnum} : ${jqXHR.responseJSON.responseData.message}`);
+            });
+        }
+
+        $.delete = function() {
+            $.ajax({
+
+            }).done(function(result, textStatus, jqXHR) {
+                // ajax 비동기 요청 실행후에 서버에서 정상 응답이 왔을때 실행
+                console.log("Success:", result);
+                $.printList(result.responseData);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // ajax 비동기 요청 실행후에 에러 응답이 왔을때 실행
+                console.log("Error:", jqXHR, textStatus, errorThrown);
+                alert(`${jqXHR.responseJSON.responseEnum} : ${jqXHR.responseJSON.responseData.message}`);
+            });
         }
     </script>
 </head>
 
 <body>
-<div id="listPrint" class="container px-4 px-lg-5">
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-        <div class="card-body"><p class="text-white m-0">수영자 정보 목록</p></div>
+<div class="wrap">
+    <div class="content" style="z-index: 7;">
+        <div id="listPrint" class="container px-4 px-lg-5">
+            <div class="card text-white bg-secondary my-5 py-4 text-center">
+                <div class="card-body"><p class="text-white m-0">수영자 정보 목록</p></div>
+            </div>
+            <!-- Content Row-->
+            <!--
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                        <div>이름 : {name}</div>
+                            <div>전화 : {phoneNumber}</div>
+                            <div>형태 : {laneType}</div>
+                            <div>개수 : {lanes}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+        <div class="modal_popup" style="display: none; z-index: 9;">
+            <h1>수영장 입력</h1>
+            <div><label for="inName">수영장 이름 : </label><input type="text" id="inName" name="name" value="" maxlength="20"/></div>
+            <div><label for="inPhoneNumber">전화번호 : </label><input type="text" id="inPhoneNumber" name="phoneNumber" value="" maxlength="20"/></div>
+            <div><label for="inAddr">주소 : </label><input type="text" id="inAddr" name="addr" value="" maxlength="20"/></div>
+            <div><label for="inLaneType">레인 길이 : </label><select id="inLaneType" name="laneType"><option value="25M">25M</option><option value="50M">50M</select></div>
+            <div><label for="inLanes">레인 수 : </label><input type="number" id="inLanes" name="lanes" value="" maxlength="2" /></div>
+            <div><button onclick="$.insert();">등록</button></div>
+            <div><button class="modalCloseButton">닫기</button></div>
+        </div>
+        <div class="modal_background" style="display: none; z-index: 8;"></div>
+        <div>
+            <button onclick="$.showInsertPopup();">수영자추가1</button>
+            <button id="showAddModalButton">수영자추가2</button>
+        </div>
     </div>
-    <!-- Content Row-->
-<!--    <div class="row gx-4 gx-lg-5">-->
-<!--        <div class="col-md-4 mb-5">-->
-<!--            <div class="card h-100">-->
-<!--                <div class="card-body">-->
-<!--                <div>이름 : {name}</div>-->
-<!--                    <div>전화 : {phoneNumber}</div>-->
-<!--                    <div>형태 : {laneType}</div>-->
-<!--                    <div>개수 : {lanes}</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
 </body>
 </html>

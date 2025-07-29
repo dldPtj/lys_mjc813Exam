@@ -12,7 +12,7 @@ public class SwimpoolDto { // Dto를 가지고 데이터가 전달될 예정
     private Integer id;
     private String name;
     private Integer lanes;
-    private Integer lane_type;
-    private String phone_number;
+    private String laneType;
+    private String phoneNumber;
     private String addr;
 }
