@@ -3,6 +3,7 @@ package com.mjc813.cinema_crud.genre.controller;
 import com.mjc813.cinema_crud.common.ResponseDto;
 import com.mjc813.cinema_crud.genre.dto.GenreDto;
 import com.mjc813.cinema_crud.genre.service.GenreService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/genre")
 public class GenreRestController {
@@ -18,20 +20,23 @@ public class GenreRestController {
     private GenreService genreService;
 
     @PostMapping("")
-    public ResponseEntity<ResponseDto> insert(@RequestBody GenreDto dto){
+    public ResponseEntity<ResponseDto> insert(@Validated @RequestBody GenreDto dto) {
         try {
             this.genreService.insert(dto);
             ResponseDto result = ResponseDto.builder()
-                    .message("Success")
+                    .message("success")
                     .resultCode(50010)
+                    .resultData(dto)
                     .build();
             return ResponseEntity.ok(result);
         } catch (Throwable e) {
+            log.error(e.toString());
             ResponseDto result = ResponseDto.builder()
-                    .message("Error")
+                    .message("error")
                     .resultCode(90000)
+                    .resultData(null)
                     .build();
-            return ResponseEntity.status(500).body(result); // 500 코드는 http 응답 코드
+            return ResponseEntity.status(500).body(result);
         }
     }
 }
