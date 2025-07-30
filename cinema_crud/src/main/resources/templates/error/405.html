@@ -1,16 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>405 error</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #dc3545;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+
+        .back-button {
+            margin-top: 24px;
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+<div class="error-container">
     <h1>405 error occurred!</h1>
-    <hr>
-    Please check your URL...
-    <br>
-    허용되지 않는 메서드입니다.<br>
-    서버가 클라이언트가 요청한 HTTP 메서드를 해당 리소스에서 지원하지 않을 때 발생합니다.<br>
-    (예를 들어, 서버에서 GET 요청만 허용하는데, 클라이언트가 POST 요청을 보낼 경우 405 에러가 발생합니다.)
+    <p>Please check your URL</p>
+    <p>허용되지 않는 메서드입니다.</p>
+    <p>서버가 클라이언트가 요청한 HTTP 메서드를 해당 리소스에서 지원하지 않을 때 발생합니다.</p>
+    <p>(예를 들어, 서버에서 GET 요청만 허용하는데, 클라이언트가 POST 요청을 보낼 경우 405 에러가 발생합니다.)</p>
+    <a href="/" class="back-button">Go Back to Home</a>
+</div>
 </body>
 </html>
