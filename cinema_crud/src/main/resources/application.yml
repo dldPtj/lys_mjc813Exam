@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:log4jdbc:mysql://localhost:3306/cinema_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: cinemauser
+    username: cinema_user
     password: qwer1234!
   mustache:
     prefix: classpath:/templates/
@@ -13,8 +13,6 @@ spring:
     charset: UTF-8
     servlet:
       cache: false
-
-
 server:
   port: 8000
   servlet:
@@ -22,3 +20,9 @@ server:
       force: true
       enabled: true
       charset: UTF-8
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.mjc813.cinema_crud
+  configuration:
+    map-underscore-to-camel-case: true
+
