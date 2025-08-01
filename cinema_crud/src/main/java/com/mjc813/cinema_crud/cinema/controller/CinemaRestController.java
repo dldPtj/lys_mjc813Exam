@@ -1,7 +1,88 @@
 package com.mjc813.cinema_crud.cinema.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.mjc813.cinema_crud.cinema.dto.CinemaDto;
+import com.mjc813.cinema_crud.cinema.dto.CinemaGenreDto;
+import com.mjc813.cinema_crud.cinema.service.CinemaService;
+import com.mjc813.cinema_crud.common.ResponseDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Slf4j
 @RestController
+@RequestMapping("/cinema")
 public class CinemaRestController {
+    @Autowired
+    private CinemaService cinemaService;
+
+    @PostMapping("")
+    public ResponseEntity<ResponseDto> insertCinema(@RequestBody CinemaDto dto) {
+        try {
+            this.cinemaService.insertCinema(dto);
+            return ResponseEntity.ok().body(
+                    new ResponseDto("ok", 50010, dto)
+            );
+        } catch (Throwable e) {
+            log.error(e.toString());
+            return ResponseEntity.ok().body(
+                    new ResponseDto("insert error", 90000, dto)
+            );
+        }
+    }
+
+    @PostMapping("/genre")
+    public ResponseEntity<ResponseDto> insert2Genre(@RequestBody CinemaGenreDto dto) {
+        try {
+            this.cinemaService.insertCinemaWithGenre(dto);
+            return ResponseEntity.ok().body(
+                    new ResponseDto("ok", 50010, dto)
+            );
+        } catch (Throwable e) {
+            log.error(e.toString());
+            return ResponseEntity.ok().body(
+                    new ResponseDto("insert error", 90000, dto)
+            );
+        }
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<ResponseDto> findByWhere() {
+        try {
+            List<CinemaGenreDto> list = this.cinemaService.findByWhere();
+            return ResponseEntity.ok().body(
+                    new ResponseDto("success", 40050, list)
+            );
+        } catch (Throwable e) {
+            log.error(e.toString());
+            return ResponseEntity.ok().body(
+                    new ResponseDto("findByWhere error", 90000, null)
+            );
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDto> findById(@PathVariable Long id) {
+        try{
+            CinemaDto dto = this.cinemaService.findById(id);
+            if ( dto == null ) {
+                return ResponseEntity.status(610).body(
+                        new ResponseDto("not found", 49999, id)
+                );
+            } else {
+                return ResponseEntity.ok().body(
+                        new ResponseDto("success", 40050, dto)
+                );
+            }
+        } catch (Throwable e) {
+            log.error(e.toString());
+            return ResponseEntity.ok().body(
+                    new ResponseDto("findById error", 90000, null)
+            );
+        }
+    }
+
+
 }

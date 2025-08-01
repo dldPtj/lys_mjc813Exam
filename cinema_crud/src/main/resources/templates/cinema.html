@@ -11,6 +11,8 @@
             background-color: #ffffff;
             color: #333;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             height: 100vh;
         }
@@ -18,10 +20,28 @@
         h1 {
             font-size: 36px;
             color: #34495e;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 <h1>영화 정보 관리 메뉴</h1>
+<a href="list.html" class="btn">영화 목록 보기</a>
 </body>
 </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 목록</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+        }
+
+        .movie-card {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background-color: white;
+            padding: 12px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .movie-card:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .no-movie {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 18px;
+            color: #888;
+        }
+
+        span {
+            word-wrap: break-word;
+            padding: 4px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<h1>영화 정보 관리 메뉴</h1>
+<div class="container">
+    <div class="header">
+        <span>ID</span>
+        <span>영화 이름</span>
+        <span>장르</span>
+        <span>상영시간</span>
+        <span>출연진</span>
+        <span>줄거리</span>
+        <span>제한연령</span>
+    </div>
+
+    {{#listWord}}
+    <div class="movie-card">
+        <span>{{id}}</span>
+        <span>{{name}}</span>
+        <span>{{genre}}</span>
+        <span>{{play_time}}</span>
+        <span>{{casts}}</span>
+        <span>{{description}}</span>
+        <span>{{restrict_age}}</span>
+    </div>
+    {{/listWord}}
+
+    {{^listWord}}
+    <div class="no-movie">상영중인 영화가 없습니다.</div>
+    {{/listWord}}
+</div>
+</body>
+</html>
