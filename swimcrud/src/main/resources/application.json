@@ -48,14 +48,12 @@
           }
         },
         "url": {
-          "raw": "localhost:8084/api/v1/swimpool/1",
+          "raw": "localhost:8089/swimpool/1",
           "host": [
             "localhost"
           ],
-          "port": "8084",
+          "port": "8089",
           "path": [
-            "api",
-            "v1",
             "swimpool",
             "1"
           ]
