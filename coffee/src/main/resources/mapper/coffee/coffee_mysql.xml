@@ -52,4 +52,19 @@
         DELETE FROM coffee_tbl
         WHERE id = #{id}
     </delete>
+
+    <select id="findWhere" resultType="CoffeeDto" parameterType="SearchRequestDto">
+        SELECT
+            id
+            , name
+            , price
+            , source
+            , shots
+        FROM coffee_tbl
+        <if test='searchWord != null and searchWord != ""'>
+            WHERE ${searchType} LIKE CONCAT('%', #{searchWord}, '%')
+        </if>
+        ORDER BY id
+        LIMIT #{rowsOnePage} OFFSET #{offset}
+    </select>
 </mapper>

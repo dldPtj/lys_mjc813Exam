@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>커피 메뉴</title>
+    <link rel="stylesheet" href="/css/list.css">
 </head>
 <body>
     <h1>커피 메뉴</h1>
+    <div>
+        <h5>커피 검색</h5>
+        <label for="searchType">커피종류</label>
+        <select id="searchType" name="searchType">
+            <option value="name">커피검색</option>
+            <option value="kind">원산지 검색</option>
+        </select>
+        <label for="searchWord">포함단어</label><input type="text" id="searchWord" name="searchWord" value="" />
+        <button onclick="doSearch();">검색</button>
+    </div>
     <div>
         <span>ID</span>
         <span>커피 이름</span>
@@ -27,5 +38,14 @@
     {{^listWord}}
     <div>메뉴가 없습니다.</div>
     {{/listWord}}
+    <button onclick="location.href='./addview'">커피메뉴추가</button>
 </body>
+<script>
+    function doSearch(){
+        let searchType = document.getElementById("searchType").value;
+        let searchWord = document.getElementById("searchWord").value;
+        let url = "./list?searchType=" + searchType + "&searchWord=" + searchWord;
+        document.location.href=url;
+    }
+</script>
 </html>

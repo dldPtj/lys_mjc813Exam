@@ -1,6 +1,8 @@
 package com.mjc813.coffee.controller;
 
 import com.mjc813.coffee.dto.CoffeeDto;
+import com.mjc813.coffee.dto.PagingDto;
+import com.mjc813.coffee.dto.SearchRequestDto;
 import com.mjc813.coffee.service.CoffeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,19 +41,39 @@ public class CoffeeController {
         } catch (Throwable e) {
             System.err.println(e.toString());
         }
-        return "redirect:/coffee/list";
+        return "redirect:./list?searchType=name&searchWord=&rowsOnePage=5&page=1";
     }
 
     @GetMapping("/coffee/list")
-    public String list(Model model) {
+    public String list(Model model
+            , @ModelAttribute SearchRequestDto searchRequestDto) {
         try {
-            List<CoffeeDto> all = this.coffeeService.findAll();
+            //SearchRequestDto searchRequestDto = new SearchRequestDto(searchType, searchWord, rowsOnePage, page, 0);
+            List<CoffeeDto> all = this.coffeeService.findWhere(searchRequestDto);
+            //List<CoffeeDto> all = this.coffeeService.findAll();
             model.addAttribute("listWord", all);
         } catch (Throwable e) {
             System.err.println(e.toString());
         }
         return "/coffee/list";
     }
+
+//    @GetMapping("/coffee/list")
+//    public String list(Model model
+//            , @RequestParam("searchType") String searchType
+//            , @RequestParam("searchWord") String searchWord
+//            , @RequestParam("rowsOnePage") Integer rowsOnePage
+//            , @RequestParam("page") Integer page) {
+//        try {
+//            SearchRequestDto searchRequestDto = new SearchRequestDto(searchType, searchWord, rowsOnePage, page, 0);
+//            //List<CoffeeDto> all = this.coffeeService.findWhere(searchRequestDto);
+//            List<CoffeeDto> all = this.coffeeService.findAll();
+//            model.addAttribute("listWord", all);
+//        } catch (Throwable e) {
+//            System.err.println(e.toString());
+//        }
+//        return "/coffee/list";
+//    }
 
     @GetMapping("/coffee/modify")
     public String modify(Model model
@@ -72,16 +94,16 @@ public class CoffeeController {
         } catch (Exception e) {
             System.err.println(e.toString());
         }
-        return "redirect:./list";
+        return "redirect:./list?searchType=name&searchWord=&rowsOnePage=5&page=1";
     }
 
     @PostMapping("/coffee/delete")
-    public String delete(@RequestParam("id") Long id) {
+    public String delete(Long id) {
         try {
             this.coffeeService.delete(id);
         } catch (Throwable e) {
             System.err.println(e.toString());
         }
-        return "redirect:/coffee/list";
+        return "redirect:./list?searchType=name&searchWord=&rowsOnePage=5&page=1";
     }
 }

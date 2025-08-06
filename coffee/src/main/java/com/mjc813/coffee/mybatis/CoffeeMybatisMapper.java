@@ -1,6 +1,7 @@
 package com.mjc813.coffee.mybatis;
 
 import com.mjc813.coffee.dto.CoffeeDto;
+import com.mjc813.coffee.dto.SearchRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface CoffeeMybatisMapper {
     public CoffeeDto findById(Long id);
     public void updateCoffee(CoffeeDto dto);
     public void deleteCoffee(Long id);
+    public List<CoffeeDto> findWhere(SearchRequestDto dto);
 }

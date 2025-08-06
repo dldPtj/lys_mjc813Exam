@@ -1,9 +1,8 @@
-ERROR 25-07-24 12:01:32[http-nio-18080-exec-1] [[dispatcherServlet]:170] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: com.samskivert.mustache.MustacheException$Context: No method or field with name 'id' on line 31] with root cause
-com.samskivert.mustache.MustacheException$Context: No method or field with name 'id' on line 31
-	at com.samskivert.mustache.Template.checkForMissing(Template.java:370)
-	at com.samskivert.mustache.Template.getValue(Template.java:273)
-	at com.samskivert.mustache.Template.getValueOrDefault(Template.java:318)
-	at com.samskivert.mustache.Mustache$VariableSegment.execute(Mustache.java:1313)
+ERROR 25-08-06 10:20:59[http-nio-18080-exec-1] [[dispatcherServlet]:170] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: com.samskivert.mustache.MustacheException$Context: No key, method or field with name 'price' on line 32] with root cause
+com.samskivert.mustache.MustacheException$Context: No key, method or field with name 'price' on line 32
+	at com.samskivert.mustache.Mustache$VariableSegment.execute(Mustache.java:1318)
+	at com.samskivert.mustache.Mustache$AbstractSectionSegment.executeSegs(Mustache.java:1393)
+	at com.samskivert.mustache.Mustache$SectionSegment.execute(Mustache.java:1429)
 	at com.samskivert.mustache.Template.executeSegs(Template.java:196)
 	at com.samskivert.mustache.Template.execute(Template.java:139)
 	at org.springframework.boot.web.servlet.view.MustacheView.renderMergedTemplateModel(MustacheView.java:79)
@@ -51,12 +50,11 @@ com.samskivert.mustache.MustacheException$Context: No method or field with name 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-ERROR 25-07-24 12:01:37[http-nio-18080-exec-2] [[dispatcherServlet]:170] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: com.samskivert.mustache.MustacheException$Context: No method or field with name 'id' on line 31] with root cause
-com.samskivert.mustache.MustacheException$Context: No method or field with name 'id' on line 31
-	at com.samskivert.mustache.Template.checkForMissing(Template.java:370)
-	at com.samskivert.mustache.Template.getValue(Template.java:273)
-	at com.samskivert.mustache.Template.getValueOrDefault(Template.java:318)
-	at com.samskivert.mustache.Mustache$VariableSegment.execute(Mustache.java:1313)
+ERROR 25-08-06 10:23:07[http-nio-18080-exec-2] [[dispatcherServlet]:170] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: com.samskivert.mustache.MustacheException$Context: No key, method or field with name 'shots' on line 34] with root cause
+com.samskivert.mustache.MustacheException$Context: No key, method or field with name 'shots' on line 34
+	at com.samskivert.mustache.Mustache$VariableSegment.execute(Mustache.java:1318)
+	at com.samskivert.mustache.Mustache$AbstractSectionSegment.executeSegs(Mustache.java:1393)
+	at com.samskivert.mustache.Mustache$SectionSegment.execute(Mustache.java:1429)
 	at com.samskivert.mustache.Template.executeSegs(Template.java:196)
 	at com.samskivert.mustache.Template.execute(Template.java:139)
 	at org.springframework.boot.web.servlet.view.MustacheView.renderMergedTemplateModel(MustacheView.java:79)
