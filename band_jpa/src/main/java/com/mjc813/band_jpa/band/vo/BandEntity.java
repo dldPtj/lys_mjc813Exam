@@ -1,6 +1,7 @@
 package com.mjc813.band_jpa.band.vo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -16,6 +17,7 @@ public class BandEntity {
     private Long id;
 
     @Column(unique = true, nullable = false, length = 30)
+    @Size(min = 6, max = 10)
     private String name;
 
     @Column(unique = true, nullable = false, length = 20)
