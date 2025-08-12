@@ -1,12 +1,7 @@
 package com.mjc813.master_refer_id;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
 @NoArgsConstructor
 public class ReferTable {
     private Long id;
@@ -19,13 +14,49 @@ public class ReferTable {
         this.name = name;
         this.masterTableId = masterTableId;
         //this.master = master;
-        this.master = new MasterTable(master.getId(), master.getName());
+        if ( master == null ) {
+            this.master = new MasterTable();
+        } else {
+            this.master = new MasterTable(master.getId(), master.getName());
+        }
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public MasterTable getMaster() {
+        return this.master;
     }
 
     public Long getMasterTableId() {
-        return master.getId();
+        if ( this.master == null ) {
+            this.master = new MasterTable();
+        }
+        return this.master.getId();
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setMasterTableId(Long masterTableId) {
-        master.setId(masterTableId);
+        if ( this.master == null ) {
+            this.master = new MasterTable();
+        }
+        this.master.setId(masterTableId);
+        this.masterTableId = masterTableId;
+    }
+
+    public void setMaster(MasterTable master) {
+        this.master = master;
     }
 }
