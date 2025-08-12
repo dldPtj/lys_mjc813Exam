@@ -73,29 +73,24 @@ public class SongRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto> findById(@PathVariable Long id) {
+    public ResponseEntity<SongEntity> findById(@PathVariable Long id) {
         try {
             Optional<SongEntity> find = this.songRepository.findById(id);
             if (find.isPresent()) {
-                return ResponseEntity.ok().body(
-                        ResponseDto.builder().resultCode(999).message("SUCCESS")
-                        .resultData(id).build());
+                return ResponseEntity.ok().body(find.orElse(null));
             } else {
                 return ResponseEntity.notFound().build();
             }
         } catch(Throwable e) {
             log.error(e.toString());
-            return ResponseEntity.status(500).body(
-                    ResponseDto.builder().resultCode(999).message("ERROR")
-                            .resultData(id).build()
-            );
+            return ResponseEntity.status(500).body(null);
         }
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseDto> findByTitleContains(@RequestParam String title, Pageable pageable) {
+    public ResponseEntity<ResponseDto> findByContains(@RequestParam String title, @RequestParam String artist, Pageable pageable) {
         try {
-            Page<SongEntity> list = this.songRepository.findByTitleContains(title, pageable);
+            Page<SongEntity> list = this.songRepository.findByTitleContainsAndArtistContains(title, artist, pageable);
             return ResponseEntity.ok().body(
                     ResponseDto.builder().resultCode(999).message("SUCCESS")
                             .resultData(list).build()
@@ -110,9 +105,9 @@ public class SongRestController {
     }
 
 //    @GetMapping("")
-//    public ResponseEntity<ResponseDto> findByArtistContains(@RequestParam String name, Pageable pageable) {
+//    public ResponseEntity<ResponseDto> findByArtistContains(Pageable pageable) {
 //        try {
-//            Page<SongEntity> list = this.songRepository.findByArtistContains(name, pageable);
+//            Page<SongEntity> list = this.songRepository.findByArtistContains(artist, pageable);
 //            return ResponseEntity.ok().body(
 //                    ResponseDto.builder().resultCode(999).message("SUCCESS")
 //                            .resultData(list).build()
