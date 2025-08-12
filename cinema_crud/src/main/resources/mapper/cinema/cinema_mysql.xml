@@ -48,4 +48,23 @@
                 FROM cinema_tbl
                 WHERE ID = #{id}
         </select>
+
+        <update id="update" parameterType="CinemaDto">
+            UPDATE
+                cinema_tbl
+            SET
+                name = #{name}
+              , genre_id      = #{genreId}
+              , play_time     = #{playTime}
+              , casts         = #{casts}
+              , description   = #{description}
+              , restrict_age  = #{restrictAge}
+            WHERE id = #{id}
+        </update>
+
+        <delete id="delete">
+            DELETE
+                cinema_tbl
+            WHERE id = #{id}
+        </delete>
 </mapper>

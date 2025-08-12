@@ -11,4 +11,6 @@ public interface CinemaMybatisMapper {
     public void insertCinema(CinemaDto dto);
     public List<CinemaGenreDto> findByWhere();
     public CinemaDto findById(Long id);
+    public CinemaDto update(CinemaDto dto);
+    public void deleteById(Long id);
 }

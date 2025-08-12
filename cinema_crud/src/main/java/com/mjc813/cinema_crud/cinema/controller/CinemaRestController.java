@@ -84,5 +84,33 @@ public class CinemaRestController {
         }
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<ResponseDto> update(@RequestBody CinemaDto dto) {
+        try {
+            this.cinemaService.update(dto);
+            return ResponseEntity.ok().body(
+                    new ResponseDto("success", 40090, dto)
+            );
+        } catch (Throwable e) {
+            log.error(e.toString());
+            return ResponseEntity.ok().body(
+                    new ResponseDto("update error", 90000, null)
+            );
+        }
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDto> delete(@PathVariable Long id) {
+        try {
+            this.cinemaService.delete(id);
+            return ResponseEntity.ok().body(
+                    new ResponseDto("success", 40030, true)
+            );
+        } catch (Throwable e) {
+            log.error(e.toString());
+            return ResponseEntity.ok().body(
+                    new ResponseDto("delete error", 90000, null)
+            );
+        }
+    }
 }
