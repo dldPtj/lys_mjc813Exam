@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ResponseDto {
-    private Integer resultCode;
+    private ResponseEnum resultCode;
     private String message;
     private Object resultData;
 }
