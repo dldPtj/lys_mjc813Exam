@@ -309,6 +309,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ingredient findBySearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/ingredient/search?name=&ingredientCategoryId=0&page=0&size=2&sort=id,desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"ingredient",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "ingredientCategoryId",
+									"value": "0"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "id,desc"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -322,7 +366,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"44444\"\r\n    , \"spicyLevel\": 0\r\n    , \"sweetLevel\": 0\r\n    , \"sourLevel\": 0\r\n    , \"saltyLevel\": 0\r\n    , \"ingredientId\": 1\r\n    , \"foodCategoryId\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"98989898\"\r\n    , \"spicyLevel\": 0\r\n    , \"sweetLevel\": 0\r\n    , \"sourLevel\": 0\r\n    , \"saltyLevel\": 0\r\n    , \"ingredientId\": 1\r\n    , \"foodCategoryId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -340,6 +384,37 @@
 								"api",
 								"v1",
 								"food"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "food Ingredient insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"food\": {\r\n        \"name\": \"900900\",\r\n        \"spicyLevel\": 3,\r\n        \"sweetLevel\": 4,\r\n        \"sourLevel\": 2,\r\n        \"saltyLevel\": 1,\r\n        \"foodCategoryId\": 1\r\n    },\r\n    \"foodIngs\" : [\r\n        {\r\n            \"foodId\": 0,\r\n            \"ingredientId\": 1,\r\n            \"capacity\": 100,\r\n            \"unit\": 0\r\n        }\r\n        , {\r\n            \"foodId\": 0,\r\n            \"ingredientId\": 2,\r\n            \"capacity\": 100,\r\n            \"unit\": 1\r\n        }\r\n        , {\r\n            \"foodId\": 0,\r\n            \"ingredientId\": 3,\r\n            \"capacity\": 100,\r\n            \"unit\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8866/api/v1/food/ings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"food",
+								"ings"
 							]
 						}
 					},
@@ -404,7 +479,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8866/api/v1/food/1",
+							"raw": "http://localhost:8866/api/v1/food/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -414,7 +489,7 @@
 								"api",
 								"v1",
 								"food",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -426,7 +501,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8866/api/v1/food",
+							"raw": "http://localhost:8866/api/v1/food/ingsr",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -435,7 +510,44 @@
 							"path": [
 								"api",
 								"v1",
-								"food"
+								"food",
+								"ingsr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "food findSearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/food/search?name=&foodCategoryId=0&sort=id,desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"food",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "foodCategoryId",
+									"value": "0"
+								},
+								{
+									"key": "sort",
+									"value": "id,desc"
+								}
 							]
 						}
 					},
@@ -571,6 +683,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ingredeent_category findSearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/ingredient_category/search?name=&page=0&size=2&sort=id,desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"ingredient_category",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "id,desc"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -698,6 +850,274 @@
 								"api",
 								"v1",
 								"food_ingredient"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "member",
+			"item": [
+				{
+					"name": "member insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\"\r\n    , \"password\": \"user1\"\r\n    , \"name\": \"user1\"\r\n    , \"nickName\": \"user1\"\r\n    , \"phoneNumber\": \"010-1111-1111\"\r\n    , \"email\": \"user1@email.com\"\r\n    , \"role\": \"USER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8866/api/v1/member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "member update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4\r\n    , \"username\": \"user1\"\r\n    , \"password\": \"user1\"\r\n    , \"name\": \"root1\"\r\n    , \"role\": \"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8866/api/v1/member/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"member",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "member delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/member/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"member",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "member findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/member/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"member",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "member findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "member findByUsernameAndNickName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"value": "BFB085414B0DA2691F61892CC3A1E76E",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8866/api/v1/member/search?username=&nickName=&role=&page=0&size=10&sort=username,desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"api",
+								"v1",
+								"member",
+								"search"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": ""
+								},
+								{
+									"key": "nickName",
+									"value": ""
+								},
+								{
+									"key": "role",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "username,desc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "member Sign",
+			"item": [
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"root\"\r\n    , \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8866/springsign/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"springsign",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8866/springsign/signout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"springsign",
+								"signout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"mjc\"\r\n    , \"password\": \"1234\"\r\n    , \"name\": \"mjc\"\r\n    , \"nickName\": \"mjc\"\r\n    , \"phoneNumber\": \"010-1111-1111\"\r\n    , \"email\": \"mjc@email.com\"\r\n    , \"role\": \"USER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8866/sign/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8866",
+							"path": [
+								"sign",
+								"signup"
 							]
 						}
 					},

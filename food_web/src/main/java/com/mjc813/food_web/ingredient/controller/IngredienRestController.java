@@ -1,15 +1,17 @@
 package com.mjc813.food_web.ingredient.controller;
 
 import com.mjc813.food_web.common.CommonRestController;
-import com.mjc813.food_web.common.IIdName;
 import com.mjc813.food_web.common.ResponseCode;
 import com.mjc813.food_web.common.ResponseDto;
 import com.mjc813.food_web.ingredient.dto.IIngredient;
 import com.mjc813.food_web.ingredient.dto.IngredientDto;
 import com.mjc813.food_web.ingredient.service.IngredientService;
-import com.mjc813.food_web.ingredient_category.dto.IngredientCategoryDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -90,4 +92,18 @@ public class IngredienRestController extends CommonRestController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDto> findBySearch(
+            @RequestParam("name") String name
+            , @RequestParam("ingredientCategoryId") Long ingredientCategoryId
+            , @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC)
+            Pageable pageable) {
+        try {
+            Page<IIngredient> all = this.ingredientService.findBySearch(name, ingredientCategoryId, pageable);
+            return this.getReponseEntity(ResponseCode.SUCCESS, "OK", all, null);
+        } catch (Throwable th) {
+            log.error(th.toString());
+            return this.getReponseEntity(ResponseCode.SELECT_FAIL, "Error", null, th);
+        }
+    }
 }

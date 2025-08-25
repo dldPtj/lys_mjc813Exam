@@ -1,10 +1,39 @@
 package com.mjc813.food_web.common;
 
+import com.mjc813.food_web.common.dto.FileTestDto;
+import com.mjc813.food_web.food.dto.FoodIngsResponseDto;
+import com.mjc813.food_web.food.service.FoodJpaTransactionService;
+import com.mjc813.food_web.member.dto.MemberDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+
+@Slf4j
 @Controller
 public class MenuController {
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    @Autowired
+    private FoodJpaTransactionService foodJpaTransactionService;
+
     @GetMapping("/food_category")
     public String menuFoodCategory() {
         return "/food/food_category";
@@ -23,5 +52,64 @@ public class MenuController {
     @GetMapping("/food")
     public String menuFood() {
         return "/food/food";
+    }
+
+    @GetMapping("/member")
+    public String member() {
+        return "member/members";
+    }
+
+    @GetMapping("/signpage")
+    public String everyone(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if ( authentication.getPrincipal() instanceof MemberDto ) {
+            MemberDto loginUser = (MemberDto) authentication.getPrincipal();
+            model.addAttribute("loginUser", loginUser);
+        } else {
+            model.addAttribute("loginUser", null);
+        }
+        return "signpage/home";
+    }
+
+    @GetMapping("/main")
+    public String mainHome(Model model) {
+        try {
+            List<FoodIngsResponseDto> all = this.foodJpaTransactionService.getFoodsAndIngredientList();
+            model.addAttribute("foodList", all);
+            return "main/home";
+        } catch ( Throwable e ) {
+            return "error/500";
+        }
+    }
+
+    @GetMapping("/file_mpa")
+    public String fileMpa() {
+        return "/file/filetest";
+    }
+
+    @PostMapping("/file/upload_mpa")    // SpringBoot 파일업로드 기본, MPA 방식
+    public String updloadMpa(Model model, @ModelAttribute FileTestDto fileTestDto) throws IOException {
+        if( fileTestDto == null ) {
+            return "redirect:/file_mpa";
+        }
+        log.debug("fileTestdto.username = {}", fileTestDto.getUsername());
+        log.debug("fileTestdto.profilePicture = {}", fileTestDto.getProfilePicture().getOriginalFilename());
+        log.debug("fileTestdto.profilePicture2 = {}", fileTestDto.getProfilePicture2().getOriginalFilename());
+        log.debug("fileTestdto.profilePicture3 = {}", fileTestDto.getProfilePicture3().getOriginalFilename());
+
+        Resource resource = resourceLoader.getResource("classpath:static/images");
+        String uploadDir = resource.getFile().getPath();
+        Path copyLocation = Paths.get(uploadDir + "/" + fileTestDto.getProfilePicture().getOriginalFilename());
+        Files.copy(fileTestDto.getProfilePicture().getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+
+        Path copyLocation2 = Paths.get(uploadDir + "/" + fileTestDto.getProfilePicture2().getOriginalFilename());
+        Files.copy(fileTestDto.getProfilePicture2().getInputStream(), copyLocation2, StandardCopyOption.REPLACE_EXISTING);
+
+        Path copyLocation3 = Paths.get(uploadDir + "/" + fileTestDto.getProfilePicture3().getOriginalFilename());
+        Files.copy(fileTestDto.getProfilePicture3().getInputStream(), copyLocation3, StandardCopyOption.REPLACE_EXISTING);
+
+        model.addAttribute("templateFilePrint", fileTestDto);
+
+        return "/file/filedone";
     }
 }

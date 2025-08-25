@@ -8,6 +8,9 @@ import com.mjc813.food_web.ingredient_category.dto.IngredientCategoryDto;
 import com.mjc813.food_web.ingredient_category.dto.IngredientCategoryEntity;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -82,5 +85,13 @@ public class IngredientService {
         List<IIngredient> result = all.parallelStream()
                 .map(x -> (IIngredient)x).toList();
         return result;
+    }
+
+    public Page<IIngredient> findBySearch(String name, Long ingredientCategoryId, Pageable pageable) {
+        Long count = this.mapper.countBySearch(name, ingredientCategoryId);
+        List<IngredientDto> list = this.mapper.findBySearch(name, ingredientCategoryId, pageable);
+        List<IIngredient> result = list.parallelStream()
+                .map(x -> (IIngredient)x).toList();
+        return new PageImpl<>(result, pageable, count);
     }
 }

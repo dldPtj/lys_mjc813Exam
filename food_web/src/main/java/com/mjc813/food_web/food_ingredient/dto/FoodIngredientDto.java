@@ -6,10 +6,9 @@ import com.mjc813.food_web.food.dto.FoodDto;
 import com.mjc813.food_web.food.dto.IFood;
 import com.mjc813.food_web.ingredient.dto.IIngredient;
 import com.mjc813.food_web.ingredient.dto.IngredientDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -17,6 +16,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class FoodIngredientDto implements IFoodIngredient {
     private Long id;
 
@@ -25,10 +25,13 @@ public class FoodIngredientDto implements IFoodIngredient {
 
     private Long ingredientId;
 
-    @JsonIgnore
+//    @JsonIgnore
     private IngredientDto ingredientDto;
 
+    @NotEmpty
     private EIngredientUnit unit;
+
+    @Min(0)
     private BigDecimal capacity;
 
     @Override

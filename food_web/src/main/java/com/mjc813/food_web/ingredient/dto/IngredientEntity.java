@@ -23,6 +23,8 @@ public class IngredientEntity implements IIngredient {
 
     @Transient
     private Long ingredientCategoryId;
+    @Transient
+    private String ingredientCategoryName;
 
 //    @JsonIgnore
     @ManyToOne

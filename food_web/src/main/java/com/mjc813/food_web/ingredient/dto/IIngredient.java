@@ -7,6 +7,9 @@ public interface IIngredient extends IIdName {
     Long getIngredientCategoryId();
     void setIngredientCategoryId(Long ingredientCategoryId);
 
+    String getIngredientCategoryName();
+    void setIngredientCategoryName(String ingredientCategoryName);
+
     @JsonIgnore
     IIdName getIngredientCategory();
     void setIngredientCategory(IIdName ingredientCategory);
@@ -17,6 +20,7 @@ public interface IIngredient extends IIdName {
         }
         this.copyMembersIdName(iIngredient);
         this.setIngredientCategoryId(iIngredient.getIngredientCategoryId());
+        this.setIngredientCategoryName(iIngredient.getIngredientCategoryName());
         this.setIngredientCategory(iIngredient.getIngredientCategory());
     }
 

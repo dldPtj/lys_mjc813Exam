@@ -1,6 +1,7 @@
 package com.mjc813.food_web.food_ingredient.service;
 
 import com.mjc813.food_web.common.IIdName;
+import com.mjc813.food_web.food.dto.FoodEntity;
 import com.mjc813.food_web.food_ingredient.dto.FoodIngredientDto;
 import com.mjc813.food_web.food_ingredient.dto.FoodIngredientEntity;
 import com.mjc813.food_web.food_ingredient.dto.IFoodIngredient;
@@ -80,5 +81,11 @@ public class FoodIngredientService {
         List<IFoodIngredient> result = all.parallelStream()
                 .map(x -> (IFoodIngredient)x).toList();
         return result;
+    }
+
+    public List<FoodIngredientEntity> findByFoodEntityOrderByFoodEntityAsc(Long foodId) {
+        FoodEntity entity = FoodEntity.builder().id(foodId).build();
+        List<FoodIngredientEntity> list = this.repository.findByFoodEntityOrderByFoodEntityAsc(entity);
+        return list;
     }
 }

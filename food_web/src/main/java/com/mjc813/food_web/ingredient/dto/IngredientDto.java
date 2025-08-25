@@ -15,8 +15,9 @@ public class IngredientDto implements IIngredient {
     private String name;
 
     private Long ingredientCategoryId;
+    private String ingredientCategoryName;
 
-    @JsonIgnore
+//    @JsonIgnore
     private IngredientCategoryDto ingredientCategoryDto;    // Dto 는 객체를 사용하지 않습니다. IIngredient 인터페이스 때문에 등장
 
     @Override

@@ -1,13 +1,16 @@
 package com.mjc813.food_web.food.service;
 
-import com.mjc813.food_web.food.dto.FoodDetailDto;
-import com.mjc813.food_web.food.dto.IFood;
-import com.mjc813.food_web.food.dto.FoodDto;
-import com.mjc813.food_web.food.dto.FoodEntity;
+import com.mjc813.food_web.food.dto.*;
+import com.mjc813.food_web.food_ingredient.dto.FoodIngredientDto;
+import com.mjc813.food_web.food_ingredient.dto.FoodIngredientEntity;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,5 +83,11 @@ public class FoodService {
 //        List<IFood> result = all.parallelStream()
 //                .map(x -> (IFood)x).toList();
         return all;
+    }
+
+    public Page<FoodDetailDto> findBySearch(String name, Long foodCategoryId, Pageable pageable) {
+        List<FoodDetailDto> list = this.mapper.findBySearch(name, foodCategoryId, pageable);
+        Long count = this.mapper.countBySearch(name, foodCategoryId);
+        return new PageImpl<>(list, pageable, count);
     }
 }

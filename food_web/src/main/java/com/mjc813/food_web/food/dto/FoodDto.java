@@ -7,6 +7,9 @@ import com.mjc813.food_web.food_category.dto.FoodCategoryDto;
 import com.mjc813.food_web.ingredient.dto.IIngredient;
 import com.mjc813.food_web.ingredient.dto.IngredientDto;
 import com.mjc813.food_web.ingredient_category.dto.IngredientCategoryDto;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -16,16 +19,25 @@ import lombok.*;
 @Builder
 public class FoodDto implements IFood {
     private Long id;
+
+    @Size(min=3, max=40)
     private String name;
+
+    @Min(0)
+    @Max(10)
     private Integer spicyLevel;
+
+    @Min(0)
+    @Max(10)
     private Integer sweetLevel;
+
+    @Min(0)
+    @Max(10)
     private Integer sourLevel;
+
+    @Min(0)
+    @Max(10)
     private Integer saltyLevel;
-
-//    private Long ingredientId;
-
-//    @JsonIgnore
-//    private IngredientDto ingredientDto;    // Dto 는 객체를 사용하지 않습니다. IFood 인터페이스 때문에 등장
 
     private Long foodCategoryId;
 
