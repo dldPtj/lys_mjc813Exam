@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -93,23 +96,21 @@ public class MenuController {
             return "redirect:/file_mpa";
         }
         log.debug("fileTestdto.username = {}", fileTestDto.getUsername());
-        log.debug("fileTestdto.profilePicture = {}", fileTestDto.getProfilePicture().getOriginalFilename());
-        log.debug("fileTestdto.profilePicture2 = {}", fileTestDto.getProfilePicture2().getOriginalFilename());
-        log.debug("fileTestdto.profilePicture3 = {}", fileTestDto.getProfilePicture3().getOriginalFilename());
+        log.debug("fileTestdto.profilePicture = {}", fileTestDto.getProfilePicture().size());
 
         Resource resource = resourceLoader.getResource("classpath:static/images");
         String uploadDir = resource.getFile().getPath();
-        Path copyLocation = Paths.get(uploadDir + "/" + fileTestDto.getProfilePicture().getOriginalFilename());
-        Files.copy(fileTestDto.getProfilePicture().getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-
-        Path copyLocation2 = Paths.get(uploadDir + "/" + fileTestDto.getProfilePicture2().getOriginalFilename());
-        Files.copy(fileTestDto.getProfilePicture2().getInputStream(), copyLocation2, StandardCopyOption.REPLACE_EXISTING);
-
-        Path copyLocation3 = Paths.get(uploadDir + "/" + fileTestDto.getProfilePicture3().getOriginalFilename());
-        Files.copy(fileTestDto.getProfilePicture3().getInputStream(), copyLocation3, StandardCopyOption.REPLACE_EXISTING);
-
-        model.addAttribute("templateFilePrint", fileTestDto);
-
-        return "/file/filedone";
+        List<MultipartFile> result = new ArrayList<>();
+        for (MultipartFile mf : fileTestDto.getProfilePictures()) {
+            if ( mf == null || Objects.requireNonNull(mf.getOriginalFilename()).isEmpty() ) {
+                continue;
+            }
+        Path copyLocation = Paths.get(uploadDir + "/" + mf.getOriginalFilename());
+        Files.copy(mf.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+        result.add(mf);
     }
+        fileTestDto.setProfilePicture(result);
+        model.addAttribute("templateFilePrint", fileTestDto);
+        return "/file/filedone";
+}
 }

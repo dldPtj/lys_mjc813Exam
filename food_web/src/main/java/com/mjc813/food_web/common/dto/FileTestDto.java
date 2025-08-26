@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileTestDto {
     private String username;
-    private MultipartFile profilePicture;
-    private MultipartFile profilePicture2;
-    private MultipartFile profilePicture3;
-
+    private List<MultipartFile> profilePictures;
 }
