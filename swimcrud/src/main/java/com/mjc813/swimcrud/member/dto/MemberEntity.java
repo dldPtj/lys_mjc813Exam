@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity ( name = "MemberEntity" )
 @Table ( name = "member_tbl" )
-public class MemberEntity {
+public class MemberEntity implements IMember {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;

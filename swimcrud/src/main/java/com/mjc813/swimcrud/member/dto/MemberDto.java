@@ -1,5 +1,6 @@
 package com.mjc813.swimcrud.member.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -8,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberDto {
+public class MemberDto implements IMember {
     private Long id;
 
     @Size(min = 2, max = 20)
@@ -21,6 +22,7 @@ public class MemberDto {
     private String password;
 
     @Size(min = 2, max = 50)
+    @Email
     private String email;
 
     @Size(min = 2, max = 15)
