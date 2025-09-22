@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  mariadb:
+    build: .
+    container_name: tomhoon-db-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: mydb
+      #MYSQL_USER: myuser
+      #MYSQL_PASSWORD: mypass
+    ports:
+      - "63306:3306"
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d
