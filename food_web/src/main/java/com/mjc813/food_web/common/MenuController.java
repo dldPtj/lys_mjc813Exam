@@ -101,16 +101,21 @@ public class MenuController {
         Resource resource = resourceLoader.getResource("classpath:static/images");
         String uploadDir = resource.getFile().getPath();
         List<MultipartFile> result = new ArrayList<>();
-        for (MultipartFile mf : fileTestDto.getProfilePictures()) {
+        for ( MultipartFile mf : fileTestDto.getProfilePicture() ) {
             if ( mf == null || Objects.requireNonNull(mf.getOriginalFilename()).isEmpty() ) {
                 continue;
             }
-        Path copyLocation = Paths.get(uploadDir + "/" + mf.getOriginalFilename());
-        Files.copy(mf.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-        result.add(mf);
-    }
+            Path copyLocation = Paths.get(uploadDir + "/" + mf.getOriginalFilename());
+            Files.copy(mf.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+            result.add(mf);
+        }
         fileTestDto.setProfilePicture(result);
         model.addAttribute("templateFilePrint", fileTestDto);
         return "/file/filedone";
-}
+    }
+
+    @GetMapping("/file_spa")
+    public String fileSpa() {
+        return "/file/filerest";
+    }
 }

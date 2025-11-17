@@ -77,7 +77,9 @@ public interface IMember extends UserDetails {
 
     default Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(this.getRole()));
+        if ( this.getRole() != null ) {
+            roles.add(new SimpleGrantedAuthority(this.getRole()));
+        }
         return roles;
     }
 }

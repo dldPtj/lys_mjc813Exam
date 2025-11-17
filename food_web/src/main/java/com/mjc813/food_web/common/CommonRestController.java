@@ -13,13 +13,14 @@ public class CommonRestController {
                             .build()
             );
         } else {
-            return ResponseEntity.status(500).body(
+            ResponseEntity<ResponseDto> result = ResponseEntity.status(500).body(
                     ResponseDto.builder()
                     .code(code)
                     .message(message)
                     .result(data)
                     .build()
             );
+            return result;
         }
     }
 }

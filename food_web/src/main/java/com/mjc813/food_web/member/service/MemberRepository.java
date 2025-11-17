@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     List<MemberEntity> findByUsernameEquals(String username);
-    List<MemberEntity> findByUsernameEqualsAndEmailEquals(String username, String email);
-    List<MemberEntity> findByUsernameEqualsAndNickNameEqualsAndEmailEquals(String username, String nickName, String email);
+    List<MemberEntity> findByUsernameEqualsAndNickNameEquals(String username, String nickName);
 }

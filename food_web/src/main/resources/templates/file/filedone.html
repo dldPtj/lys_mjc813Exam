@@ -8,11 +8,9 @@
     {{#templateFilePrint}}
     <div>
         <div>{{username}}</div>
-        <div>
-            <img src="/images/{{profilePicture.originalFilename}}">
-            <img src="/images/{{profilePicture2.originalFilename}}">
-            <img src="/images/{{profilePicture3.originalFilename}}">
-        </div>
+        {{#profilePicture}}
+            <div><img src="/images/{{originalFilename}}"></img></div>
+        {{/profilePicture}}
     </div>
     {{/templateFilePrint}}
 </body>

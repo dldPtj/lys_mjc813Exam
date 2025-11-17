@@ -14,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class FileTestDto {
     private String username;
-    private List<MultipartFile> profilePictures;
+    private List<MultipartFile> profilePicture;
 }

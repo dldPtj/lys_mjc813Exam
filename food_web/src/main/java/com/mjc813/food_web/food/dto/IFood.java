@@ -2,7 +2,6 @@ package com.mjc813.food_web.food.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mjc813.food_web.common.IIdName;
-import com.mjc813.food_web.ingredient.dto.IIngredient;
 
 public interface IFood extends IIdName {
     Integer getSpicyLevel();
@@ -16,6 +15,9 @@ public interface IFood extends IIdName {
 
     Integer getSaltyLevel();
     void setSaltyLevel(Integer saltyLevel);
+
+    String getDescription();
+    void setDescription(String description);
 
 //	Long getIngredientId();
 //    void setIngredientId(Long ingredientId);
@@ -40,6 +42,7 @@ public interface IFood extends IIdName {
         this.setSweetLevel(iFood.getSweetLevel());
         this.setSourLevel(iFood.getSourLevel());
         this.setSaltyLevel(iFood.getSaltyLevel());
+        this.setDescription(iFood.getDescription());
 
 //        this.setIngredient(iFood.getIngredient());
         this.setFoodCategory(iFood.getFoodCategory());

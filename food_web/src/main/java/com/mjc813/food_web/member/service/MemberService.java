@@ -8,7 +8,6 @@ import com.mjc813.food_web.member.dto.MemberEntity;
 import com.mjc813.food_web.security.dto.SignInRequestDto;
 import com.mjc813.food_web.security.mysec.MySecurity;
 import com.mjc813.food_web.sendemail.EmailService;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -141,19 +140,22 @@ public class MemberService implements UserDetailsService {
         if (dto == null || dto.getUsername() == null || dto.getNickName() == null || dto.getEmail() == null ) {
             throw new MyRequestException("dto input data null error !");
         }
-        List<MemberEntity> list = this.memberRepository.findByUsernameEqualsAndNickNameEqualsAndEmailEquals(dto.getUsername()
-                , dto.getNickName(), dto.getEmail());
+        List<MemberEntity> list = this.memberRepository.findByUsernameEqualsAndNickNameEquals(dto.getUsername()
+                , dto.getNickName());
         if ( list == null || list.isEmpty() ) {
             throw new MyDataNotFoundException("user data can't found !");
         }
-        MemberEntity find = list.getFirst();
-
+        MemberEntity find = (MemberEntity)this.decode(list.getFirst());
+        if ( !dto.getEmail().equals(find.getEmail()) ) {
+            throw new MyDataNotFoundException("user data can't found !");
+        }
         String to = find.getEmail();
         String subject = "FoodWeb homepage send to you about user init password !";
         String newPassword = this.emailService.generateRandomString(10);
 
         find.setPassword(encoder.encode(newPassword));
-        this.memberRepository.save(find);
+        MemberEntity data = (MemberEntity)this.encode(find);
+        this.memberRepository.save(data);
 
         String text = "you can use new password = " + newPassword;
         log.debug(text);
