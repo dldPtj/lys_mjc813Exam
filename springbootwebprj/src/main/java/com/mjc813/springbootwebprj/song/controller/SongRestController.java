@@ -1,15 +1,20 @@
 package com.mjc813.springbootwebprj.song.controller;
 
+import com.mjc813.springbootwebprj.common.CommonRestController;
 import com.mjc813.springbootwebprj.common.ResponseDto;
-import com.mjc813.springbootwebprj.genre.dto.GenreEntity;
+import com.mjc813.springbootwebprj.common.ResponseEnum;
+import com.mjc813.springbootwebprj.common.exception.MyDataNotFoundException;
+import com.mjc813.springbootwebprj.common.exception.MyRequestException;
+import com.mjc813.springbootwebprj.song.dto.ISong;
+import com.mjc813.springbootwebprj.song.dto.SongDto;
 import com.mjc813.springbootwebprj.song.dto.SongEntity;
-import com.mjc813.springbootwebprj.song.service.SongRepository;
+import com.mjc813.springbootwebprj.song.service.SongService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,107 +22,80 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/song")
-public class SongRestController {
+public class SongRestController extends CommonRestController {
     @Autowired
-    private SongRepository songRepository;
+    private SongService songService;
 
     @PostMapping("")
-    public ResponseEntity<ResponseDto> insert(@RequestBody SongEntity entity) {
+    public ResponseEntity<ResponseDto> insert(@Validated @RequestBody SongDto dto) {
         try {
-            this.songRepository.save(entity);
-            return ResponseEntity.ok().body(
-                    ResponseDto.builder().resultCode(999).message("SUCCESS")
-                            .resultData(entity).build()
-            );
-        } catch(Throwable e) {
-            log.error(e.toString());
-            return ResponseEntity.status(500).body(
-                    ResponseDto.builder().resultCode(999).message("ERROR")
-                            .resultData(entity).build()
-            );
+            ISong isong = this.songService.insert(dto);
+            return getResponseEntity(ResponseEnum.SUCCESS, "OK", isong);
+        } catch (Throwable e) {
+            return getResponseEntity(log, e, ResponseEnum.INSERT_ERROR, "ERROR", dto);
         }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ResponseDto> update(@RequestBody SongEntity entity) {
+    public ResponseEntity<ResponseDto> update(
+            @PathVariable Long id
+            , @Validated @RequestBody SongDto dto) {
         try {
-            this.songRepository.save(entity);
-            return ResponseEntity.ok().body(
-                    ResponseDto.builder().resultCode(999).message("SUCCESS")
-                            .resultData(entity).build()
-            );
-        } catch(Throwable e) {
-            log.error(e.toString());
-            return ResponseEntity.status(500).body(
-                    ResponseDto.builder().resultCode(999).message("ERROR")
-                            .resultData(entity).build()
-            );
+            if ( dto.getId() == null || !id.equals(dto.getId()) ) {
+                return getResponseEntity(ResponseEnum.REQUEST_ERROR, "ERROR", id);
+            }
+            ISong iSong = this.songService.update(dto);
+            return getResponseEntity(ResponseEnum.SUCCESS, "OK", iSong);
+        } catch (MyRequestException e) {
+            return getResponseEntity(log, e, ResponseEnum.REQUEST_ERROR, "ERROR", id);
+        } catch (MyDataNotFoundException e) {
+            return getResponseEntity(log, e, ResponseEnum.DATA_NOT_FOUND, "ERROR", id);
+        } catch (Throwable e) {
+            return getResponseEntity(log, e, ResponseEnum.UPDATE_ERROR, "ERROR", id);
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDto> delete(@PathVariable Long id) {
         try {
-            this.songRepository.deleteById(id);
-            return ResponseEntity.ok().body(
-                    ResponseDto.builder().resultCode(999).message("SUCCESS")
-                            .resultData(id).build()
-            );
-        } catch(Throwable e) {
-            log.error(e.toString());
-            return ResponseEntity.status(500).body(
-                    ResponseDto.builder().resultCode(999).message("ERROR")
-                            .resultData(id).build()
-            );
+            ISong find = this.songService.deleteById(id);
+            return getResponseEntity(ResponseEnum.SUCCESS, "OK", id);
+        } catch (MyRequestException e) {
+            return getResponseEntity(log, e, ResponseEnum.REQUEST_ERROR, "ERROR", id);
+        } catch (MyDataNotFoundException e) {
+            return getResponseEntity(log, e, ResponseEnum.DATA_NOT_FOUND, "ERROR", id);
+        } catch (Throwable e) {
+            return getResponseEntity(log, e, ResponseEnum.DELETE_ERROR, "ERROR", id);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SongEntity> findById(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto> findById(@PathVariable Long id) {
         try {
-            Optional<SongEntity> find = this.songRepository.findById(id);
-            if (find.isPresent()) {
-                return ResponseEntity.ok().body(find.orElse(null));
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch(Throwable e) {
-            log.error(e.toString());
-            return ResponseEntity.status(500).body(null);
+            ISong find = this.songService.findById(id);
+            return getResponseEntity(ResponseEnum.SUCCESS, "OK", find);
+        } catch (MyRequestException e) {
+            return getResponseEntity(log, e, ResponseEnum.REQUEST_ERROR, "ERROR", id);
+        } catch (MyDataNotFoundException e) {
+            return getResponseEntity(log, e, ResponseEnum.DATA_NOT_FOUND, "ERROR", id);
+        } catch (Throwable e) {
+            return getResponseEntity(log, e, ResponseEnum.SELECT_ERROR, "ERROR", id);
         }
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseDto> findByContains(@RequestParam String title, @RequestParam String artist, Pageable pageable) {
+    public ResponseEntity<ResponseDto> findByTitleContainsAndArtistContains(
+            @RequestParam("title") String title
+            , @RequestParam("artist") String artist
+            , Pageable pageable
+    ) {
         try {
-            Page<SongEntity> list = this.songRepository.findByTitleContainsAndArtistContains(title, artist, pageable);
-            return ResponseEntity.ok().body(
-                    ResponseDto.builder().resultCode(999).message("SUCCESS")
-                            .resultData(list).build()
-            );
+            Page<ISong> list = this.songService.findByTitleContainsAndArtistContains(title, artist, pageable);
+            return getResponseEntity(ResponseEnum.SUCCESS, "OK", list);
+        } catch (MyRequestException e) {
+            return getResponseEntity(log, e, ResponseEnum.REQUEST_ERROR, "ERROR", null);
         } catch (Throwable e) {
-            log.error(e.toString());
-            return ResponseEntity.status(500).body(
-                    ResponseDto.builder().resultCode(999).message("ERROR")
-                            .resultData(null).build()
-            );
+            return getResponseEntity(log, e, ResponseEnum.SELECT_ERROR, "ERROR", null);
         }
     }
-
-//    @GetMapping("")
-//    public ResponseEntity<ResponseDto> findByArtistContains(Pageable pageable) {
-//        try {
-//            Page<SongEntity> list = this.songRepository.findByArtistContains(artist, pageable);
-//            return ResponseEntity.ok().body(
-//                    ResponseDto.builder().resultCode(999).message("SUCCESS")
-//                            .resultData(list).build()
-//            );
-//        } catch (Throwable e) {
-//            log.error(e.toString());
-//            return ResponseEntity.status(500).body(
-//                    ResponseDto.builder().resultCode(999).message("ERROR")
-//                            .resultData(null).build()
-//            );
-//        }
-//    }
 }
