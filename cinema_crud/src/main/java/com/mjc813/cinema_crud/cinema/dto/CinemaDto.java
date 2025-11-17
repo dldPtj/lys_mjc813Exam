@@ -1,5 +1,6 @@
 package com.mjc813.cinema_crud.cinema.dto;
 
+import jdk.jshell.Snippet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,8 @@ public class CinemaDto {
     private String casts;
     private String description;
     private Integer restrictAge;
+
+    public static Snippet builder() {
+        return null;
+    }
 }
