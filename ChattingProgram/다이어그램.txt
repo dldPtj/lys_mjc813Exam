@@ -1,0 +1,67 @@
+클래스다이어그램
+    class ChatWebSocketSession {
+        -WebSocketSession webSocketSession				// websocket 세션
+        -String writer									// 사용할 대화명
+    }
+	
+    class ChatRoomDto {
+        -String roomName								// 채팅방 이름
+        -Long id										// 채팅방 id
+		-List<ChatWebSocketSession> chatUserList		// 채팅방에 연결된 사용자들
+        +Integer getCount()								// 참여자 수
+    }
+	
+	enum ChatMessageType {								// 메세지 형태 enum
+        ENTER,		// 입장
+        MESSAGE,	// 메세지전송
+        OUT,		// 퇴장
+	}
+
+    class ChatMessageDto {
+        -ChatMessageType msgType						// 메세지 형태
+        -Long roomId									// 채팅방 유일한 번호
+        -String writer									// 대화명
+        -String message									// 메세지
+    }
+
+    class ChatRoomService {
+		-Collection chatRoomCollection
+        +ChatRoomDto insert(String roomName)			// 채팅방 생성
+        +ChatRoomDto findByRoomId(Long id)				// 채팅방 찾기
+        +List<ChatRoomDto> findAll()					// 전체 채팅방 목록
+        +void deleteByRoomId(Long id)					// 채팅방 삭제
+    }
+
+    class ChatRoomController {
+        -ChatRoomService chatRoomService				// ChatRoomService 객체
+        +chatRoomList()									// 채팅방 목록 화면
+        +createChatRoom(String roomName, String writer)	// 채팅방 생성 후에 채팅방 대화 화면
+        +enterChatRoom(Long roomId, String writer)		// 기존 존재하는 채팅방 입장 후 화면
+    }
+
+
+    class ChatWebSocketHandler : TextWebSocketHandler {	// 실제 WebSocket 이벤트 처리 핵심 (메시지 수신/전송)
+        -ChatRoomService chatRoomService				// ChatRoomService 객체
+        -ObjectMapper objectMapper						// String, JSON, Map, Java 객체 변환용도
+        @Override +void handleTextMessage(WebSocketSession session, TextMessage message)			// 연결된 세션으로부터 TextMessage 를 받으면 자동 실행
+        @Override +void handleTransportError(WebSocketSession session, Throwable exception)			// 에러시 로그 처리
+        @Override +void afterConnectionClosed(WebSocketSession session, CloseStatus status)			// 세션 접속이 끊긴 대화자를 대화방에서 삭제
+        +void sendMessageSessionsInRoom(ChatMessageDto messageDto, List<ChatWebSocketSession> sessionList)			// 메세지를 모든 세션 연결자에게 전송
+        +ChatWebSocketSession findChatWebSocketSession(WebSocketSession session , List<ChatWebSocketSession> list)	// session 에 해당하는 list<세션> 요소를 찾는다.
+    }
+
+    class WebSocketConfiguration : WebSocketConfigurer {// WebSocket 설정, 엔드포인트(/ws/chat) 매핑 담당
+        -final WebSocketHandler webSocketHandler
+        @Override +void registerWebSocketHandlers()		// "/ws/chat" url 요청은 websocket 처리
+    }
+
+시퀀스다이어그램
+| --- | ----------------------------------------------------------- | -------------------------------------------------- |
+| 단계 | 동작                                                        | 처리 주체                                            |
+| --- | ----------------------------------------------------------- | -------------------------------------------------- |
+|  1  | 사용자가 "/ws/chat" 엔드포인트로 WebSocket 연결                 | `WebSocketConfiguration`, `ChatWebSocketHandler`   |
+|  2  | 메시지를 전송하면 서버의 handleTextMessage() 실행               | `ChatWebSocketHandler`                             |
+|  3  | 해당 방(roomId)의 세션 목록을 조회                              | `ChatRoomService`                                  |
+|  4  | 같은 방의 모든 세션에 메시지를 전송                              | `ChatWebSocketHandler.sendMessageSessionsInRoom()` |
+|  5  | 클라이언트(브라우저)에서는 JavaScript WebSocket API로 실시간 수신 | `chatroomdetail.html` + `jquery`                   |
+| --- | ----------------------------------------------------------- | -------------------------------------------------- |
